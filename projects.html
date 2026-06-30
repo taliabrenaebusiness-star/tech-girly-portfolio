@@ -410,14 +410,16 @@ box-shadow: 0 0 10px hotpink;
     }
     @media (max-width: 850px) {
       body {
-        padding: 0 12px 40px;
+        padding: 0 18px 40px;
       }
       .navbar {
         position: static;
         flex-direction: column;
         align-items: center;
         gap: 12px;
-        margin: 0 -12px 28px;
+        width: 100vw;
+        max-width: none;
+        margin: 0 calc(50% - 50vw) 28px;
         padding: 14px 16px;
       }
       .logo {
@@ -478,12 +480,22 @@ box-shadow: 0 0 10px hotpink;
         flex-wrap: wrap;
       }
       .pink-clock {
+        display: none;
+      }
+      .desk-keyboard,
+      .desk-keyboard.pop {
         position: static;
-        width: max-content;
-        height: auto;
-        margin: 22px auto;
-        padding: 10px 14px;
-        font-size: 24px;
+        display: block;
+        width: 120px;
+        margin: 14px auto 0;
+        opacity: 1;
+        transform: none;
+      }
+      .desk-keyboard-fallback {
+        position: static;
+        display: block;
+        margin: 14px auto 0;
+        font-size: 2.2rem;
       }
       .terminal {
         display: none;
