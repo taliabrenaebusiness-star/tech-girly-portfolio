@@ -473,6 +473,79 @@
           padding: 16px;
         }
       }
+      @media only screen and (max-width: 800px), only screen and (max-device-width: 800px) {
+        body {
+          width: 100% !important;
+          max-width: 100vw !important;
+          padding: 0 18px 44px !important;
+          overflow-x: hidden !important;
+        }
+        .navbar {
+          position: static !important;
+          width: calc(100% + 36px) !important;
+          margin: 0 -18px 28px !important;
+          transform: none !important;
+        }
+        h1,
+        #message,
+        .extra,
+        h3,
+        audio,
+        img,
+        .container,
+        .bio,
+        .terminal,
+        .side-note,
+        .pink-clock {
+          position: static !important;
+          top: auto !important;
+          right: auto !important;
+          bottom: auto !important;
+          left: auto !important;
+          transform: none !important;
+        }
+        audio {
+          display: block !important;
+          width: min(100%, 320px) !important;
+          max-width: 100% !important;
+          margin: 8px auto 24px !important;
+        }
+        .bio {
+          display: block !important;
+          box-sizing: border-box !important;
+          width: 100% !important;
+          max-width: 560px !important;
+          margin: 20px auto !important;
+          padding: 0 10px !important;
+          font-size: 21px !important;
+          line-height: 1.4 !important;
+        }
+        .side-note {
+          display: block !important;
+          box-sizing: border-box !important;
+          width: min(100%, 320px) !important;
+          margin: 24px auto !important;
+          padding: 16px !important;
+          background-color: rgba(255, 214, 235, 0.72) !important;
+          border: 2px solid #ff9ccc !important;
+          border-radius: 18px !important;
+        }
+        .side-note h4,
+        .side-note p {
+          position: static !important;
+          margin: 8px 0 !important;
+          font-size: 21px !important;
+        }
+        .pink-clock {
+          display: block !important;
+          box-sizing: border-box !important;
+          width: min(100%, 260px) !important;
+          height: auto !important;
+          margin: 20px auto !important;
+          padding: 10px 14px !important;
+          font-size: 22px !important;
+        }
+      }
   </style>
 </head>
 
