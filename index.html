@@ -722,6 +722,27 @@ setInterval(updateClock, 1000);
         input.value = "";
       }
      }
+
+    function organizeMobileHomeLayout() {
+      if (!window.matchMedia("(max-width: 800px)").matches) {
+        return;
+      }
+
+      const extraText = document.querySelector(".extra");
+      const skillContainer = document.querySelector(".container");
+      const songCaption = document.querySelector("h3");
+      const songPlayer = document.getElementById("music");
+
+      if (songCaption && songPlayer) {
+        songPlayer.insertAdjacentElement("afterend", songCaption);
+      }
+
+      if (extraText && skillContainer) {
+        skillContainer.insertAdjacentElement("afterend", extraText);
+      }
+    }
+
+    organizeMobileHomeLayout();
   </script>
 </body>
 </html>
