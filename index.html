@@ -330,7 +330,7 @@
       }
       @media (max-width: 800px) {
         body {
-          padding: 0 12px 40px;
+          padding: 0 18px 44px;
           text-align: center;
         }
         .navbar {
@@ -385,9 +385,12 @@
           font-size: 24px;
         }
         .bio {
+          box-sizing: border-box;
           width: min(100%, 560px);
-          margin: 18px auto;
-          font-size: 22px;
+          max-width: 100%;
+          margin: 20px auto;
+          padding: 0 8px;
+          font-size: 21px;
           line-height: 1.4;
         }
         .bio br {
@@ -402,8 +405,9 @@
           font-size: 18px;
         }
         audio {
-          width: min(100%, 340px);
-          margin: 0 auto 22px;
+          display: block;
+          width: min(100%, 320px);
+          margin: 8px auto 24px;
         }
         img {
           width: min(88vw, 300px);
@@ -422,12 +426,18 @@
         }
         .side-note {
           width: min(100%, 320px);
-          margin: 22px auto;
+          margin: 24px auto;
+          padding: 16px;
+          background-color: rgba(255, 214, 235, 0.72);
+          border: 2px solid #ff9ccc;
+          border-radius: 18px;
+          box-sizing: border-box;
         }
         .side-note h4,
         .side-note p {
           position: static;
-          font-size: 22px;
+          margin: 8px 0;
+          font-size: 21px;
         }
         .terminal {
           width: min(100%, 640px);
@@ -443,11 +453,13 @@
           width: 100%;
         }
         .pink-clock {
-          width: max-content;
+          display: block;
+          box-sizing: border-box;
+          width: min(100%, 260px);
           height: auto;
-          margin: 16px auto;
+          margin: 20px auto;
           padding: 10px 14px;
-          font-size: 24px;
+          font-size: 22px;
         }
       }
       @media (max-width: 430px) {
