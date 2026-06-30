@@ -542,13 +542,14 @@ box-shadow: 0 0 10px hotpink;
       .desk-keyboard.pop {
         position: static !important;
         display: block !important;
-        width: 110px !important;
-        max-width: 42vw !important;
+        width: 130px !important;
+        max-width: 55vw !important;
         height: auto !important;
-        margin: 14px auto 0 !important;
+        margin: 14px auto 12px !important;
         opacity: 1 !important;
         transform: none !important;
         z-index: 1 !important;
+        visibility: visible !important;
       }
       .desk-keyboard-fallback {
         position: static !important;
@@ -677,6 +678,18 @@ box-shadow: 0 0 10px hotpink;
     const score = document.getElementById('score');
     const clickBtn = document.getElementById('click-btn');
 
+    function placeKeyboardForMobile(keyboardElement) {
+      const clickWrapper = document.querySelector('.click-wrapper');
+
+      if (!keyboardElement || !clickWrapper) {
+        return;
+      }
+
+      if (window.matchMedia('(max-width: 850px)').matches) {
+        clickWrapper.insertAdjacentElement('afterend', keyboardElement);
+      }
+    }
+
     function updateScore() {
       if (score) score.textContent = points;
       saveState();
@@ -733,10 +746,14 @@ box-shadow: 0 0 10px hotpink;
             const fallback = document.createElement('span');
             fallback.textContent = '⌨️';
             fallback.className = 'desk-keyboard-fallback';
-            panel.appendChild(fallback);
+            placeKeyboardForMobile(fallback);
+            if (!fallback.parentElement) {
+              panel.appendChild(fallback);
+            }
             img.remove();
           };
           panel.appendChild(img);
+          placeKeyboardForMobile(img);
         }
       }
     }
