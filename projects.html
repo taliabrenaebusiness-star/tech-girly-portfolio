@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Tech Girly Eraaa 🎀</title>
+
+  <style>
+    body {
+      background-color: #ffe6f0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 100px;
+      background-repeat: repeat;
+      background-attachment: fixed;
+      margin: 0;
+      background: linear-gradient(rgba(255, 188, 224, 0.7), rgba(255, 211, 228, 0.7)), url("hearts.gif");
+    }
+
+    h1 {
+      color: hsl(330, 100%, 71%);
+      font-size: 70px;
+      text-align: center;
+      margin-top: -30px;
+      text-shadow: 2px 2px 3px #00000084;
+      font-family: monospace;
+      display: inline-block;
+      width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right 3px solid pink;
+      animation: typing 3s steps(25, end) forwards;
+    }
+    #score {
+      position: relative;
+      top: 40px;
+    }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+      }
+    h3 {
+      color: #ff67cf;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.442);
+      position: relative;
+      left: 360px;
+      top: -365px;
+    }
+
+    p {
+      color: #cc0066;
+      font-size: 35px;
+      font-family: 'VT323', monospace;
+    }
+
+    .btn {
+      background-color: pink;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 2px solid #ffb3de;
+      position: relative;
+      z-index: 999;
+    }
+    .btn:hover {
+      background-color: #ff91c8;
+      transform: scale(1.2) translateY(-5px);
+      box-shadow: 0 4px 8px rgba(134, 18, 70, 0.813);
+    }
+    .navbar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 10px 40px;
+      background-color: hwb(330 69% 0%);
+      position: relative;
+      bottom: 107px;
+      width: 100%;
+      box-sizing: border-box;
+      padding-right: 250px;
+    }
+    .logo {
+      margin-right: auto;
+    }
+    .nav-links a {
+      color: #ff4da6;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      transition: 0.3s;
+      padding: 8px 14px;
+      border-radius: 20px;
+    }
+    .nav-links a:hover {
+      background-color: rgb(255, 97, 179);
+      color: white;
+    }
+  .bow {
+    font-size: 28px;
+    text-align: center;
+    margin: 10px 0;
+  }
+    .css-text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 40px;
+      font-size: 20px;
+    }
+    .css-progress {
+      width: 60$;
+    }
+    .pink-clock {
+      background-color: hsl(330, 100%, 82%);
+      border-radius: 8px;
+      border-color: hotpink;
+      border-width: 3px;
+      border-style: solid;
+      position: absolute;
+      top: -1px;
+      right: 0px;
+      width: 180px;
+      height: 43px;
+      padding: 18px 22px;
+      font-weight: bold;
+      box-shadow: 0 2px 5px hotpink;
+      font-family: monospace;
+      font-size: 33px;
+      letter-spacing: 2px;
+      color: white;
+      text-shadow: hotpink 3px 5px 9px;
+      z-index: 999;
+    }
+    html, body {
+        overflow-x: hidden;
+    }
+    .project-cards {
+      display: flex;
+      justify-content: center;
+      gap: 35px;
+      margin-top: 50px;
+    }
+    .project-card {
+      width: 260px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(255,214,235, 0.75);
+      border: 2px solid #ff9ccc;
+      border-radius: 18px;
+      padding: 25px;
+      text-align: center;
+      color: b83280;
+      box-shadow: 0 0 12px rgba(255, 105, 180, 0.3);
+      color: #b83280;
+    }
+    .project-icon {
+      font-size: 50px;
+    }
+    .project-card button {
+      background-color: #ff8fc7;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .project-card h3 {
+      position: static;
+      top: auto;
+      left: auto;
+      right: auto;
+      bottom: auto;
+    }
+    .clicker-layout {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 80px;
+    }
+    .clicker-layout p {
+      font-size: 18px;
+    }
+    .game-panel,
+    .upgrade-shop {
+      background-color: rgba(255,214,235, 0.85);
+      border: 2px solid #ff8fc7;
+      border-radius: 20px;
+      padding: 20px;
+      color: #b83280;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+    }
+    .game-panel {
+      position: relative;
+    }
+    .game-panel {
+      width: 430px;
+      text-align: center;
+    }
+    .upgrade-shop {
+      width: 350px;
+    }
+    .window-bar {
+      background-color: #ffb6d9;
+      padding: 10px;
+      border-radius: 15px;
+      font-weight: bold;
+    }
+      font-size: 90px;
+      color: hotpink;
+      font-family: 'VT323', monospace;
+      text-shadow: 0 0 10px rgba(255, 105, 180, 0.5);
+      margin-top: 10px;
+      margin-top: 10px;
+    }
+    #click-btn,
+    .upgrade button {
+      background-color: #ff8fc7;
+      color: white;
+      border: none;
+      padding: 18px 30px;
+      border-radius: 15px;
+      font-size: 22px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    #click-btn {
+      background: linear-gradient(to bottom,
+      #ff9ccc,
+      #ff69b4
+      );
+      color: white;
+      border: 3px solid #ffc1dd;
+      padding: 16px 28px;
+      border-radius: 14px;
+      font-size: 20px;
+      font-family: 'VT323', monospace;
+      box-shadow: 0 0 12px rgba(255, 105, 180, 0.5);
+    }
+    .upgrade {
+      background-color: rgba(255,255,255,0.4);
+      border: 2px solid #ffb6d9;
+      border-radius: 15px;
+      padding: 12px;
+      margin-top: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .upgrade button {
+      background-color: #ff69b4;
+      color: white;
+      border: 2px solid #ffb6d9;
+      border-radius: 10px;
+      padding: 5px 12px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .upgrade button:hover {
+background-color: #ff8fc7;
+transform: scale(1.08);
+box-shadow: 0 0 10px hotpink;
+    }
+    .pixel-screen {
+      width: 260px;
+      height: 180px;
+      background: linear-gradient( to bottom,
+      #ffb6d9,
+      #ff8fc7
+      );
+      border: 4px solid #ff69b4;
+      border-radius: 18px;
+      margin: 30px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+    }
+    .pixel-screen.rgb-mode {
+      animation: rgbGlow 3s linear infinite;
+    }
+    @keyframes rgbGlow {
+        0% {
+    box-shadow:
+      0 0 35px hotpink,
+      0 0 70px pink;
+  }
+
+  25% {
+    box-shadow:
+      0 0 35px #ff9de1,
+      0 0 70px #ffc2ec;
+  }
+
+  50% {
+    box-shadow:
+      0 0 35px #9ad8ff,
+      0 0 70px #c7ebff;
+  }
+
+  75% {
+    box-shadow:
+      0 0 35px #d8b4ff,
+      0 0 70px #f0d6ff;
+  }
+
+  100% {
+    box-shadow:
+      0 0 35px hotpink,
+      0 0 70px pink;
+  }
+    }
+    .heart {
+      font-size: 60px;
+      animation: floatHeart 2s infinite ease-in-out;
+    }
+    @keyframes floatHeart {
+      0% {
+        transform: 
+        translateY(0px);
+      }
+      50% {
+        transform: 
+        translateY(-10px);
+      }
+      100% {
+        transform: 
+        translateY(0px);
+      }
+    }
+    .pixel-screen:hover {
+      box-shadow: 0 0 25px hotpink;
+      transition: 0.3s;
+    }
+    .click-wrapper:active {
+      transform: scale(0.95) translateY(4px);
+    }
+    .click-wrapper {
+      display: inline-block;
+      transition: 0.15s;
+    }
+    .floating-point {
+      position: absolute;
+      color: hotpink;
+      font-size: 24px;
+      font-weight: bold;
+      pointer-events: none;
+      animation: floatUp 1s ease-out forwards;
+    }
+    @keyframes floatUp {
+      0% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-50px);
+      }
+    }
+    .desk-plant-gif {
+      position: absolute;
+      width: 152px;
+      height: auto;
+      right: 8px;
+      top: 285px;
+      z-index: 30;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(8px) scale(0.95);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .desk-plant-gif.pop {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .desk-keyboard {
+      position: absolute;
+      width: 140px;
+      height: auto;
+      left: 170px;
+      top: 390px;
+      z-index: 30;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(8px) scale(0.95);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+    .desk-keyboard.pop {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    .desk-keyboard-fallback {
+      position: absolute;
+      left: -5px;
+      top: 310px;
+      font-size: 2.8rem;
+      pointer-events: none;
+      opacity: 0.9;
+      z-index: 30;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    button:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 10px hotpink;
+      transition: 0.3s ease;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="navbar">
+       <audio id="click-sound" src="click.mp3"></audio>
+    <h2 class="logo">Tech Girly🎀</h2>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="wiki.html">Talia Wiki</a>
+      <a href="mailto:taliabrenaebusiness@gmail.com">Contact</a>
+    </div>
+  </div>
+  <h1>My Projects</h1>
+  <div class="bow">🎀</div>
+  <p> a collection of things I've built with 💗 and code</p>
+<div class="project-cards">
+  <div class="project-card">
+    <div class="project-icon">⌨️</div>
+    <h3>Terminal</h3>
+    <p> A cute interactive terminal with fun commands</p>
+   <a href="index.html">
+    <button>Open Terminal >_<</button>
+    </a>
+  </div>
+  <div class="project-card">
+    <div class="project-icon">💗</div>
+    <h3>Clicker Game</h3>
+    <p>A simple game to earn cute coding points</p>
+    <a href="#clicker-game">
+    <button>Play Game 🎮</button>
+    </a>
+  </div>
+  <div class="project-card">
+    <div class="project-icon">⭐️</div>
+    <h3>Mini Games</h3>
+    <p>A collection of tiny JavaScript games</p>
+   <a href="https://canva.link/fkqen9d65y53pij" target="_blank">
+    <button>View Notes ⭐︎</button>
+    </a>
+  </div>
+  </div>
+<div class="clicker-layout" id="clicker-game">
+  <div class="game-panel">
+    <div class="window-bar">♡ tg_clicker.exe</div>
+  <p>coding points</p>
+  <h1 id="score">0</h1>
+  <div class="pixel-screen">
+    <div class="heart">💗</div>
+  </div>
+  <div class="click-wrapper">
+  <button id="click-btn">🩷CLICK ME🩷
+  </button>
+  </div>
+  <div class="needs-box">
+    <p>☕️ caffeine</p>
+    <p>🧠 motivation</p>
+    <p>😴 sleep</p>
+    <p>💻 coding skill</p>
+  </div>
+</div>
+<div class="upgrade-shop">
+  <div class="window-bar">🛒 upgrade shop</div>
+  <div class="upgrade">☕ coffee boost <span>cost: 10</span><button id="coffee-btn">buy</button></div>
+    <div class="upgrade">⌨️ pink keyboard <span>cost: 50</span><button id="keyboard-btn">buy</button></div>
+    <div class="upgrade">🎧 lo-fi headphones <span>cost: 100</span> <button id="headphone-btn">buy</button></div>
+    <div class="upgrade">🌱 desk plant <span>cost: 200</span><button id="plant-btn">buy</button></div>
+    <div class="upgrade">✨ rgb setup <span>cost: 500</span><button id="rgb-btn">buy</button></div> 
+  <div style="margin-top:14px;text-align:center;"><button id="reset-btn" class="upgrade">Reset Game</button></div>
+</div>
+</div>
+  
+<div class="pink-clock" id="clock">
+</div>
+  <div class="terminal">
+    <div class="terminal-top">
+      <span class="dot pink"></span>
+      <span class="dot white"></span>
+      <span class="dot lightpink"></span>
+    </div>
+  </div>
+  <script>
+    // Updates the digital clock display in the pink-clock element every second
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      let ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      const time = hours + ':' + minutes + ' ' + ampm;
+      const clockEl = document.getElementById('clock');
+      if (clockEl) clockEl.textContent = time;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+
+  <script>
+    // Handles the clicker game logic, including score, upgrades, persistence, and button interactions
+    let points = 0;
+    let clickPower = 1;
+    let upgrades = {
+      coffee: false,
+      keyboard: false,
+      headphone: false,
+      plant: false,
+      rgb: false
+    };
+
+    const score = document.getElementById('score');
+    const clickBtn = document.getElementById('click-btn');
+
+    function updateScore() {
+      if (score) score.textContent = points;
+      saveState();
+    }
+
+    function buyUpgrade(id, cost, powerIncrease) {
+      if (upgrades[id]) return false; // already purchased
+      if (points >= cost) {
+        points -= cost;
+        clickPower += powerIncrease;
+        upgrades[id] = true;
+        updateScore();
+        markUpgradeOwned(id);
+        return true;
+      }
+      return false;
+    }
+
+    function markUpgradeOwned(id) {
+      const btn = document.getElementById(id + '-btn');
+      if (btn) {
+        btn.textContent = 'owned';
+        btn.disabled = true;
+        btn.style.opacity = '0.7';
+        btn.classList.add('btn');
+      }
+      if (id === 'plant') {
+        // show persistent plant image when owned
+        const panel = document.querySelector('.game-panel');
+        if (panel && !panel.querySelector('.desk-plant-gif')) {
+          const img = document.createElement('img');
+          img.src = 'desk plant.gif';
+          img.alt = 'desk plant';
+          img.className = 'desk-plant-gif pop';
+          img.onerror = function () {
+            const fallback = document.createElement('span');
+            fallback.textContent = '🌱';
+            fallback.className = 'desk-plant-fallback';
+            panel.appendChild(fallback);
+            img.remove();
+          };
+          panel.appendChild(img);
+        }
+      }
+      if (id === 'keyboard') {
+        // show persistent keyboard image when owned
+        const panel = document.querySelector('.game-panel');
+        if (panel && !panel.querySelector('.desk-keyboard')) {
+          const img = document.createElement('img');
+          img.src = 'keyboard.gif';
+          img.alt = 'pink keyboard';
+          img.className = 'desk-keyboard pop';
+          img.onerror = function () {
+            const fallback = document.createElement('span');
+            fallback.textContent = '⌨️';
+            fallback.className = 'desk-keyboard-fallback';
+            panel.appendChild(fallback);
+            img.remove();
+          };
+          panel.appendChild(img);
+        }
+      }
+    }
+
+    // wire buttons
+    document.getElementById('coffee-btn').addEventListener('click', function () {
+      buyUpgrade('coffee', 10, 1);
+    });
+    document.getElementById('keyboard-btn').addEventListener('click', function () {
+      buyUpgrade('keyboard', 50, 4);
+    });
+    document.getElementById('headphone-btn').addEventListener('click', function () {
+      buyUpgrade('headphone', 100, 10);
+    });
+    document.getElementById('plant-btn').addEventListener('click', function () {
+      const bought = buyUpgrade('plant', 200, 20);
+      if (bought) showPlantGif();
+    });
+    document.getElementById('rgb-btn').addEventListener('click', function () {
+      const bought = buyUpgrade('rgb', 500, 50);
+      if (bought) {
+      document.querySelector(".pixel-screen").classList.add("rgb-mode");
+      }
+    });
+
+    clickBtn.addEventListener('click', function () {
+      points += clickPower;
+      updateScore();
+      try {
+        const sound = new Audio('click.mp3');
+        sound.play().catch(() => {});
+      } catch (e) {}
+      let popUp = document.createElement('span');
+      popUp.textContent = '+' + clickPower;
+      popUp.classList.add('floating-point');
+      clickBtn.appendChild(popUp);
+      setTimeout(function () { popUp.remove(); }, 1000);
+    });
+
+    // persistence: save/load/reset
+    function saveState() {
+      const state = { points, clickPower, upgrades };
+      try { localStorage.setItem('tg_state', JSON.stringify(state)); } catch (e) { console.warn('Could not save state', e); }
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem('tg_state');
+        if (!raw) return;
+        const state = JSON.parse(raw);
+        if (typeof state.points === 'number') points = state.points;
+        if (typeof state.clickPower === 'number') clickPower = state.clickPower;
+        if (state.upgrades) upgrades = Object.assign(upgrades, state.upgrades);
+        updateScore();
+        Object.keys(upgrades).forEach(id => { if (upgrades[id]) markUpgradeOwned(id); });
+        if (upgrades.rgb) {
+          document.querySelector(".pixel-screen")
+          .classList.add("rgb-mode");
+        }
+        if (upgrades.plant) {
+          showPlantGif();
+        }
+        if (upgrades.keyboard) {
+          const panel = document.querySelector('.game-panel');
+          if (panel && !panel.querySelector('.desk-keyboard')) {
+            markUpgradeOwned('keyboard');
+          }
+        }
+      } catch (e) { console.warn('Could not load state', e); }
+    }
+
+    function resetGame() {
+      points = 0; clickPower = 1;
+      upgrades = { coffee: false, keyboard: false, headphone: false, plant: false, rgb: false };
+      try { localStorage.removeItem('tg_state'); } catch (e) {}
+      updateScore();
+      ['coffee','keyboard','headphone','plant','rgb'].forEach(id => {
+        const btn = document.getElementById(id + '-btn');
+        if (btn) { btn.disabled = false; btn.textContent = 'buy'; btn.style.opacity = '1'; }
+      });
+      const existing = document.querySelector('.game-panel .desk-plant-gif');
+      if (existing) existing.remove();
+      const existingFallback = document.querySelector('.desk-plant-fallback');
+      if (existingFallback) existingFallback.remove();
+      const keyboard = document.querySelector('.game-panel .desk-keyboard');
+      if (keyboard) keyboard.remove();
+      const keyboardFallback = document.querySelector('.desk-keyboard-fallback');
+      if (keyboardFallback) keyboardFallback.remove();
+    }
+
+    function ensureResetButton() {
+      let rb = document.getElementById('reset-btn');
+      if (!rb) return;
+      rb.addEventListener('click', function () { resetGame(); });
+    }
+
+    // show a small transient plant GIF when purchased
+    function showPlantGif() {
+      const panel = document.querySelector('.game-panel');
+      if (!panel) return;
+      let existing = panel.querySelector('.desk-plant-gif');
+      if (existing && upgrades.plant) return;
+      const img = document.createElement('img');
+      img.src = 'desk plant.gif';
+      img.alt = 'desk plant';
+      img.className = 'desk-plant-gif';
+      panel.appendChild(img);
+    }
+
+    // initialize
+    loadState();
+    ensureResetButton();
+  </script>
+  </body>

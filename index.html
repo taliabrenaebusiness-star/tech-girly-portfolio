@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Tech Girly Eraaa 🎀</title>
+
+  <style>
+    body {
+      background-color: #ffe6f0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 100px;
+      background-image: url("hearts.gif");
+      background-repeat: repeat;
+      background-attachment: fixed;
+      margin: 0;
+      background: linear-gradient(rgba(255, 188, 224, 0.7), rgba(255, 211, 228, 0.7)), url("hearts.gif");
+    }
+
+    h1 {
+      color: #ff4da6;
+      font-size: 40px;
+      position: relative;
+      right: 300px;
+      bottom: 125px;
+      text-shadow: 2px 2px 3px #00000084;
+      display: inline-block;
+      width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right 3px solid pink;
+      width: 0;
+      animation: typing 3s steps(25, end) forwards;
+    }
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+      }
+    h3 {
+      color: #ff67cf;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.442);
+      position: relative;
+      left: 360px;
+      top: -365px;
+    }
+
+    p {
+      color: #cc0066;
+      font-size: 35px;
+    }
+
+    .btn {
+      background-color: pink;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: 2px solid #ffb3de;
+      position: relative;
+      z-index: 999;
+    }
+    .btn:hover {
+      background-color: #ff91c8;
+      transform: scale(1.2) translateY(-5px);
+      box-shadow: 0 4px 8px rgba(134, 18, 70, 0.813);
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      transform: translate(360px, -650px);
+      height: 300px;
+      align-items: center;
+      flex-direction: column;
+    }
+    .card {
+      background-color: #ffb3d9;
+      padding: 20px;
+      border-radius: 10px;
+      width: 200px;
+      box-shadow: 0 4px 8px rgba(255, 179, 217, 0.5);
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .navbar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 10px 40px;
+      background-color: hwb(330 69% 0%);
+      position: relative;
+      bottom: 107px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .logo {
+      margin-right: auto;
+    }
+    .nav-links a {
+      color: #ff4da6;
+      text-decoration: none;
+      margin-left: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      transition: 0.3s;
+      padding: 8px 14px;
+      border-radius: 20px;
+    }
+    .nav-links a:hover {
+      background-color: rgb(255, 97, 179);
+      color: white;
+    }
+    audio {
+      margin-left: 700px;
+      position: relative;
+      top: -475px;
+      border-radius: 30px;
+      padding: 6px;
+      background-color: hsl(330, 100%, 65%);
+    }
+    #message {
+      font-family: cursive;
+      font-weight: 700;
+      font-size: 30px;
+      color: #ff7dc7;
+      position: relative;
+      right: 300px;
+      bottom: 150px
+    }
+    .extra {
+      font-family: cursive;
+      font-weight: 700;
+      font-size: 25px;
+      color: #ff7dc7;
+      position: relative;
+      left: 360px;
+      bottom: 160px
+    }
+    img {
+      width: 340px;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(255, 179, 217, 0.5);
+      position: relative;
+      top: -395px;
+      display: block;
+      margin: 0 auto;
+    }
+    .bio {
+      position: absolute;
+      top: 500px;
+      left:50%;
+      transform: translateX(-50%);
+      width: 1155px;
+      color: hotpink;
+      font-size: 30px;
+      font-family: 'Dancing Script', cursive;
+      text-shadow: hsla(0, 0%, 0%, 0.691) 1px 1px 2px;
+      max-width: 1500px;
+    }
+    .progress-bar {
+      width: 100%;
+      height: 12px;
+      background-color: #ffb3d9;
+      border-radius: 20px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+    .progress {
+      height: 100%;
+      background-color: hotpink;
+      border-radius: 20px;
+    }
+    .html-progress {
+      width: 70%;
+    }
+    .skill-card {
+      background-color: #ffb3d9;
+      padding: 20px;
+      border-radius: 15px;
+      width: 260px;
+      box-shadow: 0 4px 8px rgba(255, 179, 217, 0.5);
+    }
+    .skill-title {
+      display: flex; 
+      justify-content: center;
+      font-weight: bold;
+      align-items: center;
+      gap:6px;
+    }
+    .skill-title span:first-child {
+      text-align: left;
+    }
+    .skill-title span:last-child {
+      text-align: left;
+    }
+    .progress-box {
+      width: 100%;
+      height: 120px;
+      background-color: #ffb3d9;
+      border-radius: 15px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+    .progress-fill {
+      height: 100%;
+      background-color: hotpink;
+      border-radius: 15px;
+      width: 70%;
+      text-align: right;
+      padding-right: 10px;
+    }
+    .css-text {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 40px;
+      font-size: 20px;
+    }
+    .css-progress {
+      width: 60$;
+    }
+    .side-bar {
+      position: absolute;
+      top: -210px;
+      right: -360px;
+      width: 365px;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+      opacity: 0.65;
+    }
+    .pink-clock {
+      background-color: hsl(330, 100%, 82%);
+      border-radius: 8px;
+      border-color: hotpink;
+      border-width: 3px;
+      border-style: solid;
+      position: fixed;
+      top: -210px;
+      right: 0px;
+      width: 320px;
+      height: 43px;
+      padding: 18px 22px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px
+      font-family: monospace;
+      font-size: 35px;
+      letter-spacing: 2px;
+      color: white;
+      text-shadow: hotpink 3px 5px 9px;
+    }
+    .side-note {
+      position:fixed;
+      top:-135px;
+      right: 55px;
+      width: 220px;
+      z-index: 5;
+      font-size: 5px;
+      line-height: 1.3;
+    }
+    .side-note h4 {
+      font-size: 30px;
+      color:#ff0783;
+      position: relative;
+      bottom: -5px;
+      text-shadow: 0 0 8px #ff4096;
+    }
+    .side-note p {
+      font-size: 30px;
+      color: lab(60.15% 75.53 -8.87);
+      text-shadow: 0 0 5px hwb(333 34% 0%);
+      position: relative;
+      bottom: 18px;
+    }
+    .terminal {
+      width: 650px;
+      background-color: #1e1e1e;
+      border-radius: 20px;
+      overflow: hidden;
+
+      position: absolute;
+      top: 700px;
+      left: 50%;
+      transform: translateX(-105%);
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+    }
+      .terminal-top {
+        background-color: #ffb6d9;
+        padding: 10px;
+      }
+      .dot {
+        height: 12px;
+        width: 12px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+      }
+      .pink {
+        background-color: hotpink;
+      }
+      .white {
+        background-color: white;
+      }
+      .lightpink {
+        background-color: #ffd6eb; 
+      }
+      .terminal-body {
+        padding: 20px;
+        color: hotpink;
+        font-family: monospace;
+      }
+      .terminal-input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: white;
+        font-family: monospace;
+        width: 100%;
+      }
+      #terminalOutput {
+        margin-top: 20px;
+        color: white;
+      }
+      .terminal-body p {
+        font-size: 25px;
+      }
+  </style>
+</head>
+
+<body>
+  <img src="pinkbar.png" class="side-bar">
+  <div class="navbar">
+    <h2 class="logo">Tech Girly🎀</h2>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="wiki.html">Talia Wiki</a>
+      <a href="mailto:taliabrenaebusiness@gmail.com">Contact</a>
+    </div>
+  </div>
+  <h1>Hi! My name is Ta'Lia ☆</h1>
+
+  <p id="message">This is my webpage</p>
+
+  <p class="extra">I'm learning pretty fast! </p>
+   <p class="bio">
+    Hi everyone! I'm Ta'Lia, a tech enthusiast with a passion for learning and creating. <br>I have always been super tech savvy! I started my tech journey a few months ago, and I'm<br> loving every moment of it! I'm currently exploring web development, and I'm excited to<br>share my progress and projects with you all. Stay tuned for more updates on my tech adventures! <br> XOXO💋 </p>
+
+  <button class="btn">Click Me! 🎀</button>
+  <h3> One of my favorite songs ↑</h3> 
+  <audio id="music" controls loop>
+    <source src="He Knows My Name.mp3" type="audio/mpeg">
+  </audio>
+<img src="prettyme.jpg" alt="My Photo">
+ <div class="container">
+      <div class="skill-card">
+        <div class="skill-title">
+        <span>HTML 🎀</span>
+        </div>
+        <div class=""progress-box">
+        <div class="progress-fill">70%</div>
+        </div>
+      <div class="skill-title">
+        <span>CSS 🎀</span>
+      </div>
+      <div class=""progress-box">
+      <div class="progress-fill css-progress">60%</div>
+      <div class="pink-clock" id="clock"></div>
+      </div>
+    </div>
+<div class="side-note">
+        <h4>Up Next ♡</h4>
+        <p> ✰ mini game</p>
+        <p> ✰ cute login page</p>
+        <p> ✰ daily routine app</p>
+        <p> ✰ coding cheat sheet</p>
+      </div>
+  <div class="terminal">
+    <div class="terminal-top">
+      <span class="dot pink"></span>
+      <span class="dot white"></span>
+      <span class="dot lightpink"></span>
+    </div>
+    <div class="terminal-body">
+      <p>♡ try typing: about, skills, mood, projects, help</p>
+      <div class="terminal-input">
+        <span> ta'lia@techgirly :~$</span>
+        <input type="text" id="commandInput"
+        onkeydown="handleCommand(event)">
+      </div>
+      <div id="terminalOutput"></div>
+  </div>
+  <script>
+    const button = document.querySelector(".btn");
+    const text = document.getElementById("message");
+
+    button.addEventListener("click", function() {
+      if (text.textContent === "This is my webpage") {
+      text.textContent = "& The start of my tech journey ✝️";
+      }
+      else {
+     text.textContent ="This is my webpage";
+      }
+    });
+    const music = document.getElementById("music");
+    music.volume = 0.03;
+    music.loop = true;
+function updateClock() {
+  const now = new Date();
+  let hours = now.getHours();
+  let minutes = now.getMinutes();
+  let ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  const time = hours + ':' + minutes + ' ' + ampm;
+  document.getElementById("clock").textContent = time;
+}
+updateClock();
+setInterval(updateClock, 1000);
+  </script>
+  <script>
+    function typeText(text) {
+      let output = document.getElementById("terminalOutput");
+      output.innerHTML = "";
+      let i= 0;
+      let interval = setInterval(() => {
+        output.innerHTML += text.charAt(i);
+        i++;
+        if (i >= text.length) {
+          clearInterval(interval);
+        }
+      }, 40);
+    }
+     function handleCommand(event) {
+      if (event.key === "Enter") {
+        let input = document.getElementById("commandInput");
+        let output = document.getElementById("terminalOutput");
+        let command = input.value.toLowerCase();
+        if (command === "about") {
+          typeText("♡ beginner frontend developer & tech girly");
+        }
+        else if (command === "skills") {
+          typeText("♡ HTML, CSS, JavaScript");
+        }
+        else if (command === "mood") {
+          let moods = [
+            "♡ feeling cute, might code later",
+            "♡ currently obssessed with web design",
+            "♡ debugging, send help!",
+            "♡ loving the tech journey so far",
+          ];
+          let randomMood = moods[Math.floor(Math.random() * moods.length)];
+          typeText(randomMood);
+        }
+        else if (command === "projects") {
+          output.innerHTML = "♡ mini game, dark mode toggle, cute widgets";
+        }
+        else if (command === "help") {
+          typeText("♡ available commands: about, skills, mood, projects");
+        }
+        else {
+          typeText("♡ command not recognized. Type 'help' for a list of commands.");
+        }
+        input.value = "";
+      }
+     }
+  </script>
+</body>
+</html>

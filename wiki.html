@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Talia Wiki</title>
+  <link rel="stylesheet" href="wiki.css">
+</head>
+<body>
+  <!-- Main portfolio navigation -->
+  <div class="navbar">
+    <h2 class="logo">Tech Girly🎀</h2>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="wiki.html" class="active">Talia Wiki</a>
+      <a href="mailto:taliabrenaebusiness@gmail.com">Contact</a>
+    </div>
+  </div>
+
+  <main class="wiki-page">
+    <!-- Page title and search area -->
+    <section class="hero-section">
+      <p class="eyebrow">personal knowledge base</p>
+      <h1>Talia Wiki</h1>
+      <input
+        type="search"
+        id="searchInput"
+        class="search-bar"
+        placeholder="search your notes..."
+        aria-label="Search notes"
+      >
+    </section>
+
+    <!-- Note form -->
+    <section class="note-form-section">
+      <h2>Add a Note ♡</h2>
+
+      <form id="noteForm" class="note-form">
+        <label for="noteTitle">Note Title</label>
+        <input type="text" id="noteTitle" placeholder="example: JavaScript tips" required>
+
+        <label for="noteCategory">Category</label>
+        <select id="noteCategory" required>
+          <option value="">choose a category</option>
+          <option value="Coding">Coding</option>
+          <option value="Nails">Nails</option>
+          <option value="Home">Home</option>
+          <option value="Work">Work</option>
+        </select>
+
+        <label for="noteText">Note</label>
+        <textarea id="noteText" rows="6" placeholder="write your note here..." required></textarea>
+
+        <label for="templateSelect">Note Template</label>
+        <div class="template-row">
+          <select id="templateSelect">
+            <option value="">choose a template</option>
+            <option value="clientNote">Nails - Client Note</option>
+          </select>
+          <button type="button" id="applyTemplateButton">Use Template</button>
+        </div>
+
+        <div class="emoji-picker" aria-label="Emoji picker">
+          <button type="button" class="emoji-button">🎀</button>
+          <button type="button" class="emoji-button">💗</button>
+          <button type="button" class="emoji-button">✨</button>
+          <button type="button" class="emoji-button">💅</button>
+          <button type="button" class="emoji-button">💻</button>
+          <button type="button" class="emoji-button">🏠</button>
+          <button type="button" class="emoji-button">⭐</button>
+          <button type="button" class="emoji-button">☕</button>
+        </div>
+
+        <label for="noteFile">Add Image or PDF</label>
+        <input type="file" id="noteFile" accept="image/*,.pdf,application/pdf">
+        <p class="file-help">Choose one small image or PDF to attach to this note.</p>
+        <div id="attachmentStatus" class="attachment-status"></div>
+        <button type="button" id="removeAttachmentButton" class="cancel-button">Remove Attachment</button>
+
+        <button type="submit" id="saveButton">Save Note 🎀</button>
+        <button type="button" id="cancelEditButton" class="cancel-button">Cancel Edit</button>
+      </form>
+    </section>
+
+    <!-- Saved notes display area -->
+    <section class="notes-section">
+      <div class="notes-header">
+        <h2>Saved Notes</h2>
+        <label for="sortSelect">Sort by</label>
+        <select id="sortSelect" class="sort-select">
+          <option value="newest">Newest</option>
+          <option value="oldest">Oldest</option>
+          <option value="az">A-Z</option>
+          <option value="favorites">Favorites</option>
+        </select>
+      </div>
+      <div id="notesContainer" class="notes-grid"></div>
+      <p id="emptyMessage" class="empty-message">No notes yet. Add your first cute little thought above.</p>
+    </section>
+  </main>
+
+  <!-- Dark mode toggle -->
+  <button type="button" id="darkModeToggle" class="dark-mode-toggle" aria-label="Turn dark mode on">
+    <span class="toggle-text">Dark Mode</span>
+    <span class="toggle-switch">
+      <span class="toggle-dot"></span>
+    </span>
+  </button>
+
+  <script src="wiki.js"></script>
+</body>
+</html>
