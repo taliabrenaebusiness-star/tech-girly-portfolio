@@ -396,6 +396,11 @@ body.dark-mode .note-dates {
   border: 2px solid #ffb6d9;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(255, 105, 180, 0.18);
+  cursor: pointer;
+}
+
+.note-image:hover {
+  box-shadow: 0 0 14px rgba(255, 105, 180, 0.45);
 }
 
 .pdf-link {
@@ -498,6 +503,44 @@ body.dark-mode .toggle-switch {
 
 body.dark-mode .toggle-dot {
   transform: translateX(22px);
+}
+
+.image-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-color: rgba(42, 14, 35, 0.88);
+}
+
+.image-modal.open {
+  display: flex;
+}
+
+.modal-image {
+  max-width: min(100%, 1000px);
+  max-height: 86vh;
+  object-fit: contain;
+  border: 3px solid #ffb6d9;
+  border-radius: 18px;
+  background-color: white;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.38);
+}
+
+.image-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 999px;
+  background-color: #ff69b4;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 /* Mobile styling */
@@ -606,6 +649,14 @@ body.dark-mode .toggle-dot {
     bottom: 6px;
     padding: 9px 10px 9px 12px;
     font-size: 14px;
+  }
+
+  .image-modal {
+    padding: 14px;
+  }
+
+  .modal-image {
+    max-height: 82vh;
   }
 }
 

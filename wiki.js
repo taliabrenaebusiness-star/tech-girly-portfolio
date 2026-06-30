@@ -15,6 +15,9 @@ const sortSelect = document.getElementById("sortSelect");
 const templateSelect = document.getElementById("templateSelect");
 const applyTemplateButton = document.getElementById("applyTemplateButton");
 const darkModeToggle = document.getElementById("darkModeToggle");
+const imageModal = document.getElementById("imageModal");
+const modalImage = document.getElementById("modalImage");
+const closeImageModal = document.getElementById("closeImageModal");
 const emojiButtons = document.querySelectorAll(".emoji-button");
 
 // This key is used to save and load notes from localStorage.
@@ -164,6 +167,10 @@ function createNoteCard(note) {
     attachmentElement.className = "note-image";
     attachmentElement.src = note.attachment.data;
     attachmentElement.alt = note.attachment.name;
+    attachmentElement.title = "Click to view full image";
+    attachmentElement.addEventListener("click", function () {
+      openImageModal(note.attachment.data, note.attachment.name);
+    });
   } else if (note.attachment) {
     attachmentElement = document.createElement("a");
     attachmentElement.className = "pdf-link";
@@ -215,6 +222,22 @@ function createNoteCard(note) {
 
   card.appendChild(actions);
   return card;
+}
+
+// Open an uploaded image at full size without cropping it.
+function openImageModal(imageSource, imageName) {
+  modalImage.src = imageSource;
+  modalImage.alt = imageName;
+  imageModal.classList.add("open");
+  imageModal.setAttribute("aria-hidden", "false");
+}
+
+// Close the full image viewer.
+function closeImageViewer() {
+  imageModal.classList.remove("open");
+  imageModal.setAttribute("aria-hidden", "true");
+  modalImage.src = "";
+  modalImage.alt = "";
 }
 
 // Sort notes based on the selected option, while keeping favorites pinned first.
@@ -395,6 +418,23 @@ function deleteNote(noteId) {
 
 // Stop editing without saving changes.
 cancelEditButton.addEventListener("click", resetForm);
+
+// Close the full image viewer when clicking the close button.
+closeImageModal.addEventListener("click", closeImageViewer);
+
+// Close the full image viewer when clicking outside the image.
+imageModal.addEventListener("click", function (event) {
+  if (event.target === imageModal) {
+    closeImageViewer();
+  }
+});
+
+// Close the full image viewer with the Escape key.
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape" && imageModal.classList.contains("open")) {
+    closeImageViewer();
+  }
+});
 
 // Insert the selected template only when the button is clicked.
 applyTemplateButton.addEventListener("click", function () {
