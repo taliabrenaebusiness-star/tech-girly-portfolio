@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Tech Girly Eraaa 🎀</title>
 
   <style>
@@ -323,6 +324,142 @@
       }
       .terminal-body p {
         font-size: 25px;
+      }
+      html, body {
+        overflow-x: hidden;
+      }
+      @media (max-width: 800px) {
+        body {
+          padding: 0 12px 40px;
+          text-align: center;
+        }
+        .navbar {
+          position: static;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+          margin: 0 -12px 28px;
+          padding: 14px 16px;
+        }
+        .logo {
+          margin-right: 0;
+          font-size: 24px;
+        }
+        .nav-links {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 8px;
+          width: 100%;
+        }
+        .nav-links a {
+          margin-left: 0;
+          padding: 10px 8px;
+          font-size: 15px;
+          text-align: center;
+        }
+        h1,
+        #message,
+        .extra,
+        h3,
+        audio,
+        img,
+        .container,
+        .bio,
+        .terminal,
+        .side-note,
+        .pink-clock {
+          position: static;
+          transform: none;
+        }
+        h1 {
+          display: block;
+          width: auto;
+          margin: 24px auto 12px;
+          font-size: clamp(30px, 10vw, 42px);
+          white-space: normal;
+          animation: none;
+        }
+        #message,
+        .extra {
+          margin: 10px auto;
+          font-size: 24px;
+        }
+        .bio {
+          width: min(100%, 560px);
+          margin: 18px auto;
+          font-size: 22px;
+          line-height: 1.4;
+        }
+        .bio br {
+          display: none;
+        }
+        .btn {
+          margin: 12px auto 20px;
+          padding: 10px 16px;
+        }
+        h3 {
+          margin: 12px auto;
+          font-size: 18px;
+        }
+        audio {
+          width: min(100%, 340px);
+          margin: 0 auto 22px;
+        }
+        img {
+          width: min(88vw, 300px);
+          margin: 18px auto;
+        }
+        .side-bar {
+          display: none;
+        }
+        .container {
+          height: auto;
+          margin: 18px auto;
+        }
+        .skill-card {
+          width: min(100%, 300px);
+          margin: 0 auto;
+        }
+        .side-note {
+          width: min(100%, 320px);
+          margin: 22px auto;
+        }
+        .side-note h4,
+        .side-note p {
+          position: static;
+          font-size: 22px;
+        }
+        .terminal {
+          width: min(100%, 640px);
+          margin: 24px auto 0;
+          text-align: left;
+        }
+        .terminal-body p {
+          font-size: 18px;
+        }
+        .terminal-input span,
+        .terminal-input input {
+          display: block;
+          width: 100%;
+        }
+        .pink-clock {
+          width: max-content;
+          height: auto;
+          margin: 16px auto;
+          padding: 10px 14px;
+          font-size: 24px;
+        }
+      }
+      @media (max-width: 430px) {
+        .nav-links {
+          grid-template-columns: 1fr;
+        }
+        .terminal {
+          border-radius: 16px;
+        }
+        .terminal-body {
+          padding: 16px;
+        }
       }
   </style>
 </head>
