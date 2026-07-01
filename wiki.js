@@ -18,6 +18,8 @@ const darkModeToggle = document.getElementById("darkModeToggle");
 const imageModal = document.getElementById("imageModal");
 const modalImage = document.getElementById("modalImage");
 const closeImageModal = document.getElementById("closeImageModal");
+const exportNotesButton = document.getElementById("exportNotesButton");
+const importNotesInput = document.getElementById("importNotesInput");
 const emojiButtons = document.querySelectorAll(".emoji-button");
 
 // This key is used to save and load notes from localStorage.
@@ -128,6 +130,78 @@ function formatDate(dateValue) {
 // Make a category name safe to use as a CSS class.
 function getCategoryClass(category) {
   return "category-" + category.toLowerCase().replace(/\s+/g, "-");
+}
+
+// Create a backup file that can be saved to iCloud Drive or another device.
+function exportNotes() {
+  const backup = {
+    app: "Talia Wiki",
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    notes: notes
+  };
+
+  const backupText = JSON.stringify(backup, null, 2);
+  const backupFile = new Blob([backupText], { type: "application/json" });
+  const downloadLink = document.createElement("a");
+  const dateStamp = new Date().toISOString().slice(0, 10);
+
+  downloadLink.href = URL.createObjectURL(backupFile);
+  downloadLink.download = "talia-wiki-backup-" + dateStamp + ".json";
+  downloadLink.click();
+  URL.revokeObjectURL(downloadLink.href);
+}
+
+// Read a backup file and restore the notes inside this browser.
+function importNotes(file) {
+  if (!file) {
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.addEventListener("load", function () {
+    try {
+      const backup = JSON.parse(reader.result);
+      const importedNotes = Array.isArray(backup) ? backup : backup.notes;
+
+      if (!Array.isArray(importedNotes)) {
+        alert("That backup file does not look like a Talia Wiki backup.");
+        return;
+      }
+
+      const shouldReplace = confirm("Import these notes? This will replace the notes currently saved in this browser.");
+
+      if (!shouldReplace) {
+        return;
+      }
+
+      notes = importedNotes.map(function (note) {
+        const fallbackDate = note.id || Date.now();
+
+        return {
+          id: note.id || Date.now(),
+          title: note.title || "Untitled Note",
+          category: note.category || "Coding",
+          text: note.text || "",
+          favorite: note.favorite || false,
+          attachment: note.attachment || null,
+          createdAt: note.createdAt || fallbackDate,
+          updatedAt: note.updatedAt || fallbackDate
+        };
+      });
+
+      saveNotes();
+      displayNotes();
+      alert("Notes imported successfully.");
+    } catch (error) {
+      alert("That backup file could not be imported. Please choose a valid Talia Wiki backup.");
+    }
+
+    importNotesInput.value = "";
+  });
+
+  reader.readAsText(file);
 }
 
 // Create one note card and add the note information inside it.
@@ -418,6 +492,14 @@ function deleteNote(noteId) {
 
 // Stop editing without saving changes.
 cancelEditButton.addEventListener("click", resetForm);
+
+// Export all saved notes to a backup file.
+exportNotesButton.addEventListener("click", exportNotes);
+
+// Import notes from a backup file.
+importNotesInput.addEventListener("change", function () {
+  importNotes(importNotesInput.files[0]);
+});
 
 // Close the full image viewer when clicking the close button.
 closeImageModal.addEventListener("click", closeImageViewer);

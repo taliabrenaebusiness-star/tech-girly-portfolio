@@ -303,6 +303,41 @@ body.dark-mode .empty-message {
   outline: none;
 }
 
+.backup-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.backup-tools button,
+.import-notes-label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 11px 16px;
+  border: none;
+  border-radius: 16px;
+  background-color: #ff69b4;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: bold;
+  box-shadow: 0 6px 12px rgba(255, 105, 180, 0.28);
+}
+
+.backup-tools button:hover,
+.import-notes-label:hover {
+  background-color: #ff4da6;
+  transform: scale(1.04) translateY(-2px);
+  box-shadow: 0 0 12px hotpink;
+}
+
+#importNotesInput {
+  display: none;
+}
+
 .notes-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -608,7 +643,9 @@ body.dark-mode .toggle-dot {
   }
 
   .note-form button,
-  .card-button {
+  .card-button,
+  .backup-tools button,
+  .import-notes-label {
     width: 100%;
   }
 

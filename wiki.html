@@ -95,6 +95,11 @@
           <option value="favorites">Favorites</option>
         </select>
       </div>
+      <div class="backup-tools">
+        <button type="button" id="exportNotesButton">Export Notes</button>
+        <label for="importNotesInput" class="import-notes-label">Import Notes</label>
+        <input type="file" id="importNotesInput" accept=".json,application/json">
+      </div>
       <div id="notesContainer" class="notes-grid"></div>
       <p id="emptyMessage" class="empty-message">No notes yet. Add your first cute little thought above.</p>
     </section>
