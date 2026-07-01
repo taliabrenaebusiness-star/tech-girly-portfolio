@@ -30,6 +30,18 @@
         placeholder="search your notes..."
         aria-label="Search notes"
       >
+
+      <!-- Google login for cloud note sync -->
+      <div class="sync-panel">
+        <div>
+          <h2>Cloud Sync</h2>
+          <p id="syncStatus">Sign in with Google to sync notes across your devices.</p>
+        </div>
+        <div class="sync-actions">
+          <button type="button" id="signInButton">Sign in with Google</button>
+          <button type="button" id="signOutButton">Sign Out</button>
+        </div>
+      </div>
     </section>
 
     <!-- Note form -->
@@ -120,6 +132,6 @@
     <img id="modalImage" class="modal-image" alt="">
   </div>
 
-  <script src="wiki.js"></script>
+  <script type="module" src="wiki.js"></script>
 </body>
 </html>

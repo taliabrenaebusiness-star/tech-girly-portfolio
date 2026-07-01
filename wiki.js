@@ -1,3 +1,28 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  GoogleAuthProvider,
+  getAuth,
+  onAuthStateChanged,
+  signInWithPopup,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  getFirestore,
+  onSnapshot,
+  setDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import {
+  deleteObject,
+  getDownloadURL,
+  getStorage,
+  ref,
+  uploadBytes
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+
 // Get the important page elements.
 const noteForm = document.getElementById("noteForm");
 const noteTitle = document.getElementById("noteTitle");
@@ -21,11 +46,31 @@ const closeImageModal = document.getElementById("closeImageModal");
 const exportNotesButton = document.getElementById("exportNotesButton");
 const exportSelectedNotesButton = document.getElementById("exportSelectedNotesButton");
 const importNotesInput = document.getElementById("importNotesInput");
+const signInButton = document.getElementById("signInButton");
+const signOutButton = document.getElementById("signOutButton");
+const syncStatus = document.getElementById("syncStatus");
 const emojiButtons = document.querySelectorAll(".emoji-button");
 
 // This key is used to save and load notes from localStorage.
 const storageKey = "taliaWikiNotes";
 const darkModeKey = "taliaWikiDarkMode";
+
+// Firebase connects Talia Wiki to cloud sync and Google login.
+const firebaseConfig = {
+  apiKey: "AIzaSyBQyCF57AQ7dV0zAj6zBYKKY3qFodmewuE",
+  authDomain: "talia-wiki.firebaseapp.com",
+  projectId: "talia-wiki",
+  storageBucket: "talia-wiki.firebasestorage.app",
+  messagingSenderId: "428841207090",
+  appId: "1:428841207090:web:7e74db919915ac780c032b",
+  measurementId: "G-FH872LW2R6"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
+const database = getFirestore(app);
+const storage = getStorage(app);
 
 // These templates can be inserted into the note box when selected.
 const noteTemplates = {
@@ -44,20 +89,7 @@ const noteTemplates = {
 let notes = JSON.parse(localStorage.getItem(storageKey)) || [];
 
 // Add newer fields to older notes so every note has the same shape.
-notes = notes.map(function (note) {
-  const fallbackDate = note.id || Date.now();
-
-  return {
-    id: note.id || Date.now(),
-    title: note.title,
-    category: note.category,
-    text: note.text,
-    favorite: note.favorite || false,
-    attachment: note.attachment || null,
-    createdAt: note.createdAt || fallbackDate,
-    updatedAt: note.updatedAt || fallbackDate
-  };
-});
+notes = notes.map(normalizeNote);
 
 // This keeps track of which note is being edited.
 let noteBeingEdited = null;
@@ -67,6 +99,12 @@ let currentAttachment = null;
 
 // This keeps track of note cards selected for export.
 let selectedNoteIds = [];
+
+// These keep track of the current cloud sync state.
+let currentUser = null;
+let unsubscribeCloudNotes = null;
+let isApplyingCloudNotes = false;
+let isFirstCloudLoad = true;
 
 // Turn dark mode on or off and save the choice.
 function setDarkMode(isDarkMode) {
@@ -80,18 +118,104 @@ function setDarkMode(isDarkMode) {
   }
 }
 
-// Save the current notes array to localStorage.
+// Make older saved notes match the newest note format.
+function normalizeNote(note, index) {
+  const fallbackDate = note.id || Date.now() + (index || 0);
+
+  return {
+    id: String(note.id || Date.now() + (index || 0)),
+    title: note.title || "Untitled Note",
+    category: note.category || "Coding",
+    text: note.text || "",
+    favorite: note.favorite || false,
+    attachment: note.attachment || null,
+    createdAt: note.createdAt || fallbackDate,
+    updatedAt: note.updatedAt || fallbackDate
+  };
+}
+
+// Show a friendly cloud sync message.
+function updateSyncStatus(message) {
+  syncStatus.textContent = message;
+}
+
+// Get the Firestore spot where this user's notes are saved.
+function getUserNotesCollection() {
+  return collection(database, "users", currentUser.uid, "notes");
+}
+
+// Make file names safe for Firebase Storage paths.
+function getSafeFileName(fileName) {
+  return fileName.replace(/[^a-zA-Z0-9._-]/g, "-");
+}
+
+// Check whether an attachment is an image, even if it came from an older backup.
+function isImageAttachment(attachment) {
+  if (!attachment) {
+    return false;
+  }
+
+  const hasImageType = attachment.type && attachment.type.startsWith("image/");
+  const hasImageData = attachment.data && attachment.data.startsWith("data:image/");
+  const hasImageUrl = attachment.url && attachment.type && attachment.type.startsWith("image/");
+
+  return hasImageType || hasImageData || hasImageUrl;
+}
+
+// Upload one attachment to Firebase Storage and return the link for the note.
+async function uploadAttachmentToCloud(file, noteId) {
+  const safeFileName = getSafeFileName(file.name);
+  const attachmentPath = "users/" + currentUser.uid + "/attachments/" + noteId + "/" + Date.now() + "-" + safeFileName;
+  const attachmentRef = ref(storage, attachmentPath);
+
+  await uploadBytes(attachmentRef, file, { contentType: file.type });
+
+  return {
+    name: file.name,
+    type: file.type,
+    url: await getDownloadURL(attachmentRef),
+    path: attachmentPath
+  };
+}
+
+// Turn an older localStorage attachment into a Firebase Storage attachment.
+async function uploadSavedAttachmentToCloud(attachment, noteId) {
+  if (!attachment || !attachment.data || attachment.url) {
+    return attachment;
+  }
+
+  const response = await fetch(attachment.data);
+  const attachmentBlob = await response.blob();
+  const safeFileName = getSafeFileName(attachment.name || "attachment");
+  const attachmentPath = "users/" + currentUser.uid + "/attachments/" + noteId + "/" + Date.now() + "-" + safeFileName;
+  const attachmentRef = ref(storage, attachmentPath);
+
+  await uploadBytes(attachmentRef, attachmentBlob, { contentType: attachment.type });
+
+  return {
+    name: attachment.name || "attachment",
+    type: attachment.type || attachmentBlob.type,
+    url: await getDownloadURL(attachmentRef),
+    path: attachmentPath
+  };
+}
+
+// Save the current notes array to localStorage and Firebase when signed in.
 function saveNotes() {
   try {
     localStorage.setItem(storageKey, JSON.stringify(notes));
   } catch (error) {
     alert("This file is too large to save in your browser. Try a smaller image or PDF.");
   }
+
+  if (currentUser && !isApplyingCloudNotes) {
+    syncNotesToCloud();
+  }
 }
 
-// Turn the selected image or PDF into text that localStorage can save.
-function readAttachmentFile(file) {
-  return new Promise(function (resolve, reject) {
+// Save the selected image or PDF locally, or upload it to Firebase when signed in.
+function readAttachmentFile(file, noteId) {
+  return new Promise(async function (resolve, reject) {
     if (!file) {
       resolve(currentAttachment);
       return;
@@ -101,6 +225,16 @@ function readAttachmentFile(file) {
 
     if (file.size > maxFileSize) {
       reject("Please choose a file smaller than 4MB.");
+      return;
+    }
+
+    if (currentUser) {
+      try {
+        resolve(await uploadAttachmentToCloud(file, noteId));
+      } catch (error) {
+        reject("That file could not sync to Firebase. Please try again.");
+      }
+
       return;
     }
 
@@ -176,7 +310,7 @@ function copyImportedNotes(importedNotes) {
     const fallbackDate = note.id || Date.now();
 
     return {
-      id: Date.now() + index,
+      id: String(Date.now() + index),
       title: note.title || "Untitled Note",
       category: note.category || "Coding",
       text: note.text || "",
@@ -217,7 +351,7 @@ function importNotes(file) {
         const fallbackDate = note.id || Date.now();
 
         return {
-          id: note.id || Date.now(),
+          id: String(note.id || Date.now()),
           title: note.title || "Untitled Note",
           category: note.category || "Coding",
           text: note.text || "",
@@ -246,6 +380,112 @@ function importNotes(file) {
   });
 
   reader.readAsText(file);
+}
+
+// Merge local notes with cloud notes without making duplicates.
+function mergeNotes(cloudNotes, localNotes) {
+  const mergedNotes = new Map();
+
+  cloudNotes.concat(localNotes).forEach(function (note) {
+    const cleanNote = normalizeNote(note);
+    const savedNote = mergedNotes.get(cleanNote.id);
+
+    if (!savedNote || cleanNote.updatedAt > savedNote.updatedAt) {
+      mergedNotes.set(cleanNote.id, cleanNote);
+    }
+  });
+
+  return Array.from(mergedNotes.values());
+}
+
+// Prepare a note before it goes to Firestore.
+async function prepareNoteForCloud(note) {
+  const cleanNote = normalizeNote(note);
+
+  if (cleanNote.attachment && cleanNote.attachment.data && !cleanNote.attachment.url) {
+    cleanNote.attachment = await uploadSavedAttachmentToCloud(cleanNote.attachment, cleanNote.id);
+  }
+
+  return cleanNote;
+}
+
+// Copy the current note list into Firebase for the signed-in user.
+async function syncNotesToCloud() {
+  if (!currentUser) {
+    return;
+  }
+
+  try {
+    updateSyncStatus("Syncing your notes...");
+
+    const notesCollection = getUserNotesCollection();
+    const cloudSnapshot = await getDocs(notesCollection);
+    const savedNoteIds = notes.map(function (note) {
+      return String(note.id);
+    });
+
+    for (const note of notes) {
+      const cloudNote = await prepareNoteForCloud(note);
+      const noteRef = doc(database, "users", currentUser.uid, "notes", cloudNote.id);
+
+      await setDoc(noteRef, cloudNote);
+    }
+
+    for (const cloudDoc of cloudSnapshot.docs) {
+      if (!savedNoteIds.includes(cloudDoc.id)) {
+        await deleteDoc(cloudDoc.ref);
+      }
+    }
+
+    updateSyncStatus("Synced with Google as " + currentUser.displayName + ".");
+  } catch (error) {
+    updateSyncStatus("Could not sync yet. Check your Firebase rules and try again.");
+  }
+}
+
+// Watch Firebase for note changes from your other devices.
+function watchCloudNotes() {
+  if (unsubscribeCloudNotes) {
+    unsubscribeCloudNotes();
+  }
+
+  isFirstCloudLoad = true;
+  unsubscribeCloudNotes = onSnapshot(getUserNotesCollection(), function (snapshot) {
+    const cloudNotes = snapshot.docs.map(function (cloudDoc) {
+      return normalizeNote({
+        id: cloudDoc.id,
+        ...cloudDoc.data()
+      });
+    });
+
+    if (isFirstCloudLoad) {
+      isFirstCloudLoad = false;
+      const mergedNotes = mergeNotes(cloudNotes, notes);
+
+      isApplyingCloudNotes = true;
+      notes = mergedNotes;
+      localStorage.setItem(storageKey, JSON.stringify(notes));
+      displayNotes();
+      isApplyingCloudNotes = false;
+
+      if (mergedNotes.length !== cloudNotes.length) {
+        syncNotesToCloud();
+      } else {
+        updateSyncStatus("Synced with Google as " + currentUser.displayName + ".");
+      }
+
+      return;
+    }
+
+    isApplyingCloudNotes = true;
+    notes = cloudNotes;
+    localStorage.setItem(storageKey, JSON.stringify(notes));
+    displayNotes();
+    updateSyncStatus("Synced with Google as " + currentUser.displayName + ".");
+    isApplyingCloudNotes = false;
+  }, function () {
+    updateSyncStatus("Firebase is connected, but the rules need permission for your account.");
+  });
 }
 
 // Create one note card and add the note information inside it.
@@ -301,19 +541,19 @@ function createNoteCard(note) {
 
   let attachmentElement = null;
 
-  if (note.attachment && note.attachment.type && note.attachment.type.startsWith("image/")) {
+  if (isImageAttachment(note.attachment)) {
     attachmentElement = document.createElement("img");
     attachmentElement.className = "note-image";
-    attachmentElement.src = note.attachment.data;
+    attachmentElement.src = note.attachment.url || note.attachment.data;
     attachmentElement.alt = note.attachment.name;
     attachmentElement.title = "Click to view full image";
     attachmentElement.addEventListener("click", function () {
-      openImageModal(note.attachment.data, note.attachment.name);
+      openImageModal(note.attachment.url || note.attachment.data, note.attachment.name);
     });
   } else if (note.attachment) {
     attachmentElement = document.createElement("a");
     attachmentElement.className = "pdf-link";
-    attachmentElement.href = note.attachment.data;
+    attachmentElement.href = note.attachment.url || note.attachment.data;
     attachmentElement.target = "_blank";
     attachmentElement.textContent = "Open PDF: " + note.attachment.name;
   }
@@ -436,9 +676,11 @@ noteForm.addEventListener("submit", async function (event) {
   event.preventDefault();
 
   let attachment;
+  const noteId = noteBeingEdited || String(Date.now());
+  const savedAt = Date.now();
 
   try {
-    attachment = await readAttachmentFile(noteFile.files[0]);
+    attachment = await readAttachmentFile(noteFile.files[0], noteId);
   } catch (message) {
     alert(message);
     return;
@@ -455,7 +697,7 @@ noteForm.addEventListener("submit", async function (event) {
           favorite: note.favorite,
           attachment: attachment,
           createdAt: note.createdAt,
-          updatedAt: Date.now()
+          updatedAt: savedAt
         };
       }
 
@@ -463,14 +705,14 @@ noteForm.addEventListener("submit", async function (event) {
     });
   } else {
     const newNote = {
-      id: Date.now(),
+      id: noteId,
       title: noteTitle.value.trim(),
       category: noteCategory.value,
       text: noteText.value.trim(),
       favorite: false,
       attachment: attachment,
-      createdAt: Date.now(),
-      updatedAt: Date.now()
+      createdAt: savedAt,
+      updatedAt: savedAt
     };
 
     notes.unshift(newNote);
@@ -532,6 +774,7 @@ function toggleFavorite(noteId) {
   notes = notes.map(function (note) {
     if (note.id === noteId) {
       note.favorite = !note.favorite;
+      note.updatedAt = Date.now();
     }
 
     return note;
@@ -543,6 +786,10 @@ function toggleFavorite(noteId) {
 
 // Delete one note and update localStorage.
 function deleteNote(noteId) {
+  const noteToDelete = notes.find(function (note) {
+    return note.id === noteId;
+  });
+
   notes = notes.filter(function (note) {
     return note.id !== noteId;
   });
@@ -557,6 +804,10 @@ function deleteNote(noteId) {
 
   saveNotes();
   displayNotes();
+
+  if (currentUser && noteToDelete && noteToDelete.attachment && noteToDelete.attachment.path) {
+    deleteObject(ref(storage, noteToDelete.attachment.path)).catch(function () {});
+  }
 }
 
 // Stop editing without saving changes.
@@ -573,6 +824,39 @@ exportSelectedNotesButton.addEventListener("click", exportSelectedNotes);
 // Import notes from a backup file.
 importNotesInput.addEventListener("change", function () {
   importNotes(importNotesInput.files[0]);
+});
+
+// Sign in with Google so notes can sync across devices.
+signInButton.addEventListener("click", function () {
+  signInWithPopup(auth, googleProvider).catch(function () {
+    updateSyncStatus("Google sign-in did not finish. Please try again.");
+  });
+});
+
+// Sign out when you do not want this browser connected to cloud sync.
+signOutButton.addEventListener("click", function () {
+  signOut(auth);
+});
+
+// Update the page when the Google login state changes.
+onAuthStateChanged(auth, function (user) {
+  currentUser = user;
+
+  if (user) {
+    signInButton.style.display = "none";
+    signOutButton.style.display = "inline-flex";
+    updateSyncStatus("Signed in as " + user.displayName + ". Loading your cloud notes...");
+    watchCloudNotes();
+  } else {
+    if (unsubscribeCloudNotes) {
+      unsubscribeCloudNotes();
+      unsubscribeCloudNotes = null;
+    }
+
+    signInButton.style.display = "inline-flex";
+    signOutButton.style.display = "none";
+    updateSyncStatus("Sign in with Google to sync notes across your devices.");
+  }
 });
 
 // Close the full image viewer when clicking the close button.
