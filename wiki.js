@@ -93,10 +93,10 @@ function readAttachmentFile(file) {
       return;
     }
 
-    const maxFileSize = 2 * 1024 * 1024;
+    const maxFileSize = 4 * 1024 * 1024;
 
     if (file.size > maxFileSize) {
-      reject("Please choose a file smaller than 2MB.");
+      reject("Please choose a file smaller than 4MB.");
       return;
     }
 
