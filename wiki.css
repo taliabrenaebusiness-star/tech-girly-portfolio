@@ -366,6 +366,22 @@ body.dark-mode .note-card {
   box-shadow: 0 0 18px rgba(255, 105, 180, 0.38);
 }
 
+.select-note-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #b83280;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.select-note-label input {
+  width: 18px;
+  height: 18px;
+  accent-color: #ff69b4;
+}
+
 .note-card h3 {
   margin: 0;
   color: #b83280;
@@ -374,7 +390,8 @@ body.dark-mode .note-card {
 
 body.dark-mode .note-card h3,
 body.dark-mode .note-card p,
-body.dark-mode .note-dates {
+body.dark-mode .note-dates,
+body.dark-mode .select-note-label {
   color: #ffe6f4;
 }
 

@@ -19,6 +19,7 @@ const imageModal = document.getElementById("imageModal");
 const modalImage = document.getElementById("modalImage");
 const closeImageModal = document.getElementById("closeImageModal");
 const exportNotesButton = document.getElementById("exportNotesButton");
+const exportSelectedNotesButton = document.getElementById("exportSelectedNotesButton");
 const importNotesInput = document.getElementById("importNotesInput");
 const emojiButtons = document.querySelectorAll(".emoji-button");
 
@@ -63,6 +64,9 @@ let noteBeingEdited = null;
 
 // This keeps the current attachment while a note is being edited.
 let currentAttachment = null;
+
+// This keeps track of note cards selected for export.
+let selectedNoteIds = [];
 
 // Turn dark mode on or off and save the choice.
 function setDarkMode(isDarkMode) {
@@ -133,12 +137,17 @@ function getCategoryClass(category) {
 }
 
 // Create a backup file that can be saved to iCloud Drive or another device.
-function exportNotes() {
+function exportNotes(notesToExport, fileLabel) {
+  if (notesToExport.length === 0) {
+    alert("Please select at least one note to export.");
+    return;
+  }
+
   const backup = {
     app: "Talia Wiki",
     version: 1,
     exportedAt: new Date().toISOString(),
-    notes: notes
+    notes: notesToExport
   };
 
   const backupText = JSON.stringify(backup, null, 2);
@@ -147,9 +156,36 @@ function exportNotes() {
   const dateStamp = new Date().toISOString().slice(0, 10);
 
   downloadLink.href = URL.createObjectURL(backupFile);
-  downloadLink.download = "talia-wiki-backup-" + dateStamp + ".json";
+  downloadLink.download = "talia-wiki-" + fileLabel + "-" + dateStamp + ".json";
   downloadLink.click();
   URL.revokeObjectURL(downloadLink.href);
+}
+
+// Export only the notes that are checked.
+function exportSelectedNotes() {
+  const selectedNotes = notes.filter(function (note) {
+    return selectedNoteIds.includes(note.id);
+  });
+
+  exportNotes(selectedNotes, "selected-notes");
+}
+
+// Give imported notes fresh IDs when adding them to existing notes.
+function copyImportedNotes(importedNotes) {
+  return importedNotes.map(function (note, index) {
+    const fallbackDate = note.id || Date.now();
+
+    return {
+      id: Date.now() + index,
+      title: note.title || "Untitled Note",
+      category: note.category || "Coding",
+      text: note.text || "",
+      favorite: note.favorite || false,
+      attachment: note.attachment || null,
+      createdAt: note.createdAt || fallbackDate,
+      updatedAt: note.updatedAt || fallbackDate
+    };
+  });
 }
 
 // Read a backup file and restore the notes inside this browser.
@@ -170,13 +206,14 @@ function importNotes(file) {
         return;
       }
 
-      const shouldReplace = confirm("Import these notes? This will replace the notes currently saved in this browser.");
+      const shouldImport = confirm("Import these notes? Click OK to continue.");
 
-      if (!shouldReplace) {
+      if (!shouldImport) {
         return;
       }
 
-      notes = importedNotes.map(function (note) {
+      const shouldReplace = confirm("Click OK to replace your current notes. Click Cancel to add the imported notes to your current notes.");
+      const cleanedImportedNotes = importedNotes.map(function (note) {
         const fallbackDate = note.id || Date.now();
 
         return {
@@ -191,6 +228,13 @@ function importNotes(file) {
         };
       });
 
+      if (shouldReplace) {
+        notes = cleanedImportedNotes;
+      } else {
+        notes = copyImportedNotes(importedNotes).concat(notes);
+      }
+
+      selectedNoteIds = [];
       saveNotes();
       displayNotes();
       alert("Notes imported successfully.");
@@ -212,6 +256,27 @@ function createNoteCard(note) {
   if (note.favorite) {
     card.classList.add("favorite");
   }
+
+  const selectLabel = document.createElement("label");
+  selectLabel.className = "select-note-label";
+
+  const selectCheckbox = document.createElement("input");
+  selectCheckbox.type = "checkbox";
+  selectCheckbox.checked = selectedNoteIds.includes(note.id);
+  selectCheckbox.addEventListener("change", function () {
+    if (selectCheckbox.checked) {
+      selectedNoteIds.push(note.id);
+    } else {
+      selectedNoteIds = selectedNoteIds.filter(function (selectedId) {
+        return selectedId !== note.id;
+      });
+    }
+  });
+
+  const selectText = document.createElement("span");
+  selectText.textContent = "Select for export";
+
+  selectLabel.append(selectCheckbox, selectText);
 
   const title = document.createElement("h3");
   title.textContent = note.title;
@@ -288,7 +353,7 @@ function createNoteCard(note) {
   });
 
   actions.append(favoriteButton, editButton, deleteButton);
-  card.append(title, category, dates, text);
+  card.append(selectLabel, title, category, dates, text);
 
   if (attachmentElement) {
     card.appendChild(attachmentElement);
@@ -486,6 +551,10 @@ function deleteNote(noteId) {
     resetForm();
   }
 
+  selectedNoteIds = selectedNoteIds.filter(function (selectedId) {
+    return selectedId !== noteId;
+  });
+
   saveNotes();
   displayNotes();
 }
@@ -494,7 +563,12 @@ function deleteNote(noteId) {
 cancelEditButton.addEventListener("click", resetForm);
 
 // Export all saved notes to a backup file.
-exportNotesButton.addEventListener("click", exportNotes);
+exportNotesButton.addEventListener("click", function () {
+  exportNotes(notes, "all-notes");
+});
+
+// Export only checked notes to a backup file.
+exportSelectedNotesButton.addEventListener("click", exportSelectedNotes);
 
 // Import notes from a backup file.
 importNotesInput.addEventListener("change", function () {
