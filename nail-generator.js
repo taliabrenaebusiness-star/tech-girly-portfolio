@@ -55,6 +55,26 @@ const imagePrompt = document.getElementById("imagePrompt");
 const copyPromptButton = document.getElementById("copyPromptButton");
 const copyClientButton = document.getElementById("copyClientButton");
 const saveToWikiButton = document.getElementById("saveToWikiButton");
+const frontViewButton = document.getElementById("frontViewButton");
+const sideViewButton = document.getElementById("sideViewButton");
+const frontPreview = document.getElementById("frontPreview");
+const sidePreview = document.getElementById("sidePreview");
+const handNails = document.querySelectorAll(".hand-nail");
+const nailSelectorButtons = document.getElementById("nailSelectorButtons");
+const baseColorPicker = document.getElementById("baseColorPicker");
+const tipColorPicker = document.getElementById("tipColorPicker");
+const frenchToggle = document.getElementById("frenchToggle");
+const chromeToggle = document.getElementById("chromeToggle");
+const glitterToggle = document.getElementById("glitterToggle");
+const rhinestonesToggle = document.getElementById("rhinestonesToggle");
+const charmToggle = document.getElementById("charmToggle");
+const auraToggle = document.getElementById("auraToggle");
+const clearNailButton = document.getElementById("clearNailButton");
+const applyAllButton = document.getElementById("applyAllButton");
+const randomizeButton = document.getElementById("randomizeButton");
+const colorsUsedList = document.getElementById("colorsUsedList");
+const finishesList = document.getElementById("finishesList");
+const generateSimilarButton = document.getElementById("generateSimilarButton");
 
 const storageKey = "taliaWikiNotes";
 const paletteStorageKey = "taliaNailPalettes";
@@ -63,6 +83,16 @@ let currentSet = null;
 let selectedColors = [];
 let customColors = [];
 let generatedPalette = [];
+let selectedNailIndex = 0;
+
+const nailNames = ["Thumb", "Index", "Middle", "Ring", "Pinky"];
+let nailDesigns = [
+  createDefaultNail("#f2a1a7", "#f5f0f4", true, true),
+  createDefaultNail("#ffc1dd", "#fff1f6", false, false),
+  createDefaultNail("#ff8fc8", "#fff9fb", false, false),
+  createDefaultNail("#c97991", "#fff1f6", false, false),
+  createDefaultNail("#f2a1a7", "#d9d9e8", true, true)
+];
 
 const levelDetails = {
   simple: {
@@ -239,6 +269,219 @@ function getSelectedAddOns() {
   return Array.from(document.querySelectorAll(".addons-fieldset input:checked")).map(function (checkbox) {
     return checkbox.value;
   });
+}
+
+// Create the starting design for one nail.
+function createDefaultNail(baseColor, tipColor, french, chrome) {
+  return {
+    baseColor: baseColor,
+    tipColor: tipColor,
+    french: french,
+    chrome: chrome,
+    glitter: false,
+    rhinestones: false,
+    charm: false,
+    aura: false
+  };
+}
+
+// Copy a nail design so one nail can be applied to another safely.
+function copyNailDesign(nail) {
+  return {
+    baseColor: nail.baseColor,
+    tipColor: nail.tipColor,
+    french: nail.french,
+    chrome: nail.chrome,
+    glitter: nail.glitter,
+    rhinestones: nail.rhinestones,
+    charm: nail.charm,
+    aura: nail.aura
+  };
+}
+
+// Turn a hex color into a display label.
+function getColorNameByHex(hexValue) {
+  const allColors = presetColors.concat(customColors);
+  const matchedColor = allColors.find(function (color) {
+    return color.hex.toLowerCase() === hexValue.toLowerCase();
+  });
+
+  return matchedColor ? matchedColor.name : hexValue.toUpperCase();
+}
+
+// Get all unique colors used by the hand preview.
+function getPreviewColors() {
+  const colors = [];
+
+  nailDesigns.forEach(function (nail) {
+    [
+      { name: getColorNameByHex(nail.baseColor), hex: nail.baseColor },
+      { name: getColorNameByHex(nail.tipColor), hex: nail.tipColor }
+    ].forEach(function (color) {
+      const alreadySaved = colors.some(function (savedColor) {
+        return savedColor.hex.toLowerCase() === color.hex.toLowerCase();
+      });
+
+      if (!alreadySaved) {
+        colors.push(color);
+      }
+    });
+  });
+
+  return colors;
+}
+
+// Get the art finishes used across the preview.
+function getPreviewFinishes() {
+  const finishes = ["Glossy"];
+
+  nailDesigns.forEach(function (nail) {
+    if (nail.french && !finishes.includes("French tips")) finishes.push("French tips");
+    if (nail.chrome && !finishes.includes("Chrome")) finishes.push("Chrome");
+    if (nail.glitter && !finishes.includes("Glitter")) finishes.push("Glitter");
+    if (nail.rhinestones && !finishes.includes("Rhinestones")) finishes.push("Rhinestones");
+    if (nail.charm && !finishes.includes("Charm")) finishes.push("Charm");
+    if (nail.aura && !finishes.includes("Aura/star")) finishes.push("Aura/star");
+  });
+
+  return finishes;
+}
+
+// Describe one nail for the generated panel and Wiki note.
+function describeNail(nail, nailName) {
+  const details = [getColorNameByHex(nail.baseColor) + " base"];
+
+  if (nail.french) details.push(getColorNameByHex(nail.tipColor) + " French tip");
+  if (nail.chrome) details.push("chrome finish");
+  if (nail.glitter) details.push("glitter");
+  if (nail.rhinestones) details.push("rhinestones");
+  if (nail.charm) details.push("charm");
+  if (nail.aura) details.push("aura/star design");
+
+  return nailName + ": " + details.join(", ");
+}
+
+// Render the hand preview based on the current nail designs.
+function renderHandPreview() {
+  handNails.forEach(function (nailElement, index) {
+    const nail = nailDesigns[index];
+
+    nailElement.style.setProperty("--base-color", nail.baseColor);
+    nailElement.style.setProperty("--tip-color", nail.tipColor);
+    nailElement.classList.toggle("selected", index === selectedNailIndex);
+    nailElement.classList.toggle("french", nail.french);
+    nailElement.classList.toggle("chrome", nail.chrome);
+    nailElement.classList.toggle("glitter", nail.glitter);
+    nailElement.classList.toggle("rhinestones", nail.rhinestones);
+    nailElement.classList.toggle("charm", nail.charm);
+    nailElement.classList.toggle("aura", nail.aura);
+  });
+
+  renderNailSelectorButtons();
+}
+
+// Build the 1-5 nail selector buttons.
+function renderNailSelectorButtons() {
+  nailSelectorButtons.innerHTML = "";
+
+  nailNames.forEach(function (name, index) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = index + 1 + " " + name;
+    button.classList.toggle("active", index === selectedNailIndex);
+    button.addEventListener("click", function () {
+      selectNail(index);
+    });
+
+    nailSelectorButtons.appendChild(button);
+  });
+}
+
+// Select one nail and load its values into the controls.
+function selectNail(index) {
+  selectedNailIndex = index;
+  syncNailControls();
+  renderHandPreview();
+}
+
+// Load the selected nail into the control panel.
+function syncNailControls() {
+  const nail = nailDesigns[selectedNailIndex];
+
+  baseColorPicker.value = nail.baseColor;
+  tipColorPicker.value = nail.tipColor;
+  frenchToggle.checked = nail.french;
+  chromeToggle.checked = nail.chrome;
+  glitterToggle.checked = nail.glitter;
+  rhinestonesToggle.checked = nail.rhinestones;
+  charmToggle.checked = nail.charm;
+  auraToggle.checked = nail.aura;
+}
+
+// Save the control panel values back to the selected nail.
+function updateSelectedNailFromControls() {
+  nailDesigns[selectedNailIndex] = {
+    baseColor: baseColorPicker.value,
+    tipColor: tipColorPicker.value,
+    french: frenchToggle.checked,
+    chrome: chromeToggle.checked,
+    glitter: glitterToggle.checked,
+    rhinestones: rhinestonesToggle.checked,
+    charm: charmToggle.checked,
+    aura: auraToggle.checked
+  };
+
+  renderHandPreview();
+}
+
+// Clear the selected nail back to a simple glossy color.
+function clearSelectedNail() {
+  nailDesigns[selectedNailIndex] = createDefaultNail("#ffc1dd", "#fff9fb", false, false);
+  syncNailControls();
+  renderHandPreview();
+}
+
+// Copy the selected nail's design to all nails.
+function applySelectedNailToAll() {
+  const design = copyNailDesign(nailDesigns[selectedNailIndex]);
+
+  nailDesigns = nailDesigns.map(function () {
+    return copyNailDesign(design);
+  });
+
+  syncNailControls();
+  renderHandPreview();
+}
+
+// Randomize every nail using the selected palette or a pretty fallback palette.
+function randomizeDesign() {
+  const palette = selectedColors.length > 0 ? selectedColors : getRandomPalette();
+
+  if (selectedColors.length === 0) {
+    generatedPalette = palette;
+    selectedColorSummary.textContent = "Generated palette: " + getColorText(generatedPalette);
+  }
+
+  nailDesigns = nailNames.map(function (name, index) {
+    const base = palette[index % palette.length];
+    const tip = palette[(index + 1) % palette.length];
+
+    return {
+      baseColor: base.hex,
+      tipColor: tip.hex,
+      french: index === 0 || index === 4,
+      chrome: index === 0 || index === 4,
+      glitter: index === 2 || index === 3,
+      rhinestones: index === 3 || index === 4,
+      charm: index === 3,
+      aura: index === 4
+    };
+  });
+
+  selectedColors = palette;
+  renderColorStudio();
+  syncNailControls();
+  renderHandPreview();
 }
 
 // Add list items to a result list.
@@ -587,6 +830,26 @@ function displayPalette(colors) {
   });
 }
 
+// Show pill-style generated details.
+function displayPills(container, items) {
+  container.innerHTML = "";
+
+  items.forEach(function (item) {
+    const pill = document.createElement("span");
+    pill.className = "detail-pill";
+
+    if (item.hex) {
+      pill.style.setProperty("--pill-color", item.hex);
+      pill.classList.add("color-pill");
+      pill.textContent = item.name;
+    } else {
+      pill.textContent = item;
+    }
+
+    container.appendChild(pill);
+  });
+}
+
 // Build a cute nail set name from the selected options.
 function buildSetName(occasion, vibe, colors, addOns) {
   const firstColor = colors[0] ? colors[0].name : "Pink";
@@ -599,20 +862,9 @@ function buildSetName(occasion, vibe, colors, addOns) {
 
 // Create the finger-by-finger design plan.
 function buildFingerBreakdown(choices) {
-  const addOnText = choices.addOns.length > 0 ? choices.addOns.join(", ") : "soft glossy accents";
-  const colors = choices.colors;
-  const colorOne = colors[0] ? colors[0].name : "Baby Pink";
-  const colorTwo = colors[1] ? colors[1].name : colorOne;
-  const colorThree = colors[2] ? colors[2].name : "Milky White";
-  const colorFour = colors[3] ? colors[3].name : colorTwo;
-
-  return [
-    "Thumbs: " + colorOne + " base with " + colorThree + " detail and " + addOnText + ".",
-    "Index fingers: glossy " + colorTwo + " solid nail to balance the set.",
-    "Middle fingers: main statement nail blending " + getColorText(colors) + " with the strongest " + choices.vibe + " detail.",
-    "Ring fingers: soft accent using " + colorThree + " and " + colorFour + " so the palette feels tied together.",
-    "Pinky fingers: clean " + colorOne + " finish with a tiny accent so the set still feels wearable."
-  ];
+  return nailDesigns.map(function (nail, index) {
+    return describeNail(nail, nailNames[index]);
+  });
 }
 
 // Create a product list based on the design.
@@ -629,9 +881,12 @@ function buildProducts(choices) {
     "Detail brush and liner brush for clean artwork"
   ];
 
-  choices.addOns.forEach(function (addOn) {
-    products.push("Add-on product: " + addOn);
-  });
+  if (choices.finishes.includes("Chrome")) products.push("Chrome powder or chrome gel");
+  if (choices.finishes.includes("Glitter")) products.push("Fine glitter gel");
+  if (choices.finishes.includes("Rhinestones")) products.push("Rhinestone gel and crystals");
+  if (choices.finishes.includes("Charm")) products.push("Nail charms and strong charm gel");
+  if (choices.finishes.includes("Aura/star")) products.push("Airbrush sponge or star detail brush");
+  if (choices.finishes.includes("French tips")) products.push("French tip brush or liner brush");
 
   return products;
 }
@@ -652,12 +907,16 @@ function buildTechniqueTips(choices) {
     tips.push("Build the art in thin layers so the final set stays smooth instead of bulky.");
   }
 
-  if (choices.addOns.includes("rhinestones") || choices.addOns.includes("charms") || choices.addOns.includes("pearls")) {
+  if (choices.finishes.includes("Rhinestones") || choices.finishes.includes("Charm")) {
     tips.push("Place stones and charms with gem gel, then seal around each piece without covering the shine.");
   }
 
-  if (choices.addOns.includes("chrome")) {
+  if (choices.finishes.includes("Chrome")) {
     tips.push("Use no-wipe top coat before chrome, then seal the free edge twice.");
+  }
+
+  if (choices.finishes.includes("French tips")) {
+    tips.push("Paint French tips slowly from sidewall to center so every smile line stays even.");
   }
 
   return tips;
@@ -667,9 +926,9 @@ function buildTechniqueTips(choices) {
 function estimateSetDetails(choices) {
   const baseDetails = levelDetails[choices.designLevel];
   const colorCount = choices.colors.length;
-  const addOnCount = choices.addOns.length;
-  const extraMinutes = Math.max(0, colorCount - 2) * 10 + addOnCount * 8;
-  const extraPrice = Math.max(0, colorCount - 2) * 5 + addOnCount * 6;
+  const finishCount = choices.finishes.length;
+  const extraMinutes = Math.max(0, colorCount - 2) * 10 + finishCount * 7;
+  const extraPrice = Math.max(0, colorCount - 2) * 5 + finishCount * 6;
 
   const priceNumbers = baseDetails.price.match(/\d+/g).map(Number);
   const lowPrice = priceNumbers[0] + extraPrice;
@@ -677,11 +936,11 @@ function estimateSetDetails(choices) {
 
   let difficulty = baseDetails.difficulty;
 
-  if (colorCount >= 4 || addOnCount >= 4) {
+  if (colorCount >= 4 || finishCount >= 5) {
     difficulty = "Advanced glam";
   }
 
-  if (choices.designLevel === "extra" && (colorCount >= 4 || addOnCount >= 5)) {
+  if (choices.designLevel === "extra" && (colorCount >= 4 || finishCount >= 6)) {
     difficulty = "Expert glam";
   }
 
@@ -696,8 +955,8 @@ function estimateSetDetails(choices) {
 function buildClientMessage(choices, name, details) {
   return "Hi love! Your " + name + " is a " + choices.vibe + " " + choices.length + " " + choices.shape +
     " set for " + choices.occasion + " using " + getColorText(choices.colors) + ". I would plan about " + details.time +
-    " for this appointment, and the estimated price range is " + details.price +
-    " depending on final add-ons. Bring any inspo pictures you like, and we can make it match your exact vibe.";
+    " for this appointment, and the estimated price range is " + details.price + ". The finish plan includes " +
+    choices.finishes.join(", ") + ". Bring any inspo pictures you like, and we can make it match your exact vibe.";
 }
 
 // Write a detailed prompt that can be pasted into any image generator.
@@ -705,15 +964,16 @@ function buildImagePrompt(choices, name) {
   const addOnText = choices.addOns.length > 0 ? choices.addOns.join(", ") : "subtle glossy details";
 
   return choices.length + " " + choices.shape + " acrylic nails featuring " + getColorText(choices.colors) +
-    " with " + addOnText + ", a " + choices.vibe + " aesthetic for " + choices.occasion +
+    " with " + choices.finishes.join(", ") + ", a " + choices.vibe + " aesthetic for " + choices.occasion +
     ", glossy finish, luxury nail photography, clean cuticles, salon-quality detail, feminine dark pink studio background, soft lighting, close-up hand pose, no text in the image.";
 }
 
 // Create one full generated nail set object.
 function generateNailSet() {
-  const colorsForSet = selectedColors.length > 0 ? selectedColors : getRandomPalette();
+  const previewColors = getPreviewColors();
+  const colorsForSet = previewColors.length > 0 ? previewColors : selectedColors.length > 0 ? selectedColors : getRandomPalette();
 
-  if (selectedColors.length === 0) {
+  if (selectedColors.length === 0 && previewColors.length === 0) {
     generatedPalette = colorsForSet;
     selectedColorSummary.textContent = "Generated palette: " + getColorText(generatedPalette);
   }
@@ -725,7 +985,9 @@ function generateNailSet() {
     shape: shapeInput.value,
     colors: colorsForSet,
     designLevel: designLevelInput.value,
-    addOns: getSelectedAddOns()
+    addOns: getSelectedAddOns(),
+    finishes: getPreviewFinishes(),
+    nailDesigns: nailDesigns.map(copyNailDesign)
   };
 
   const details = estimateSetDetails(choices);
@@ -756,6 +1018,8 @@ function displayGeneratedSet(generatedSet) {
   imagePrompt.textContent = generatedSet.imagePrompt;
 
   fillList(fingerBreakdown, generatedSet.fingerBreakdown);
+  displayPills(colorsUsedList, generatedSet.choices.colors);
+  displayPills(finishesList, generatedSet.choices.finishes);
   fillList(productsNeeded, generatedSet.products);
   fillList(techniqueTips, generatedSet.tips);
   displayPalette(generatedSet.choices.colors);
@@ -844,8 +1108,10 @@ function buildWikiNoteText(generatedSet) {
     "Length: " + generatedSet.choices.length,
     "Shape: " + generatedSet.choices.shape,
     "Colors: " + getColorText(generatedSet.choices.colors),
+    "Finishes: " + generatedSet.choices.finishes.join(", "),
     "Design Level: " + generatedSet.choices.designLevel,
     "Add-ons: " + (generatedSet.choices.addOns.join(", ") || "none"),
+    "Date Created: " + new Date(generatedSet.createdAt || Date.now()).toLocaleDateString("en-US"),
     "",
     "Finger-by-Finger Breakdown:",
     generatedSet.fingerBreakdown.map(function (item) {
@@ -924,6 +1190,7 @@ async function saveGeneratedSetToWiki() {
 generatorForm.addEventListener("submit", function (event) {
   event.preventDefault();
   currentSet = generateNailSet();
+  currentSet.createdAt = Date.now();
   displayGeneratedSet(currentSet);
   saveStatus.textContent = "Generated. Copy it, save it, or attach your final image later.";
 });
@@ -957,6 +1224,54 @@ saveGeneratedPaletteButton.addEventListener("click", function () {
   savePalette(generatedPalette, "Generated Palette");
 });
 
+// Switch between front and side preview.
+frontViewButton.addEventListener("click", function () {
+  frontViewButton.classList.add("active");
+  sideViewButton.classList.remove("active");
+  frontPreview.classList.remove("hidden");
+  sidePreview.classList.remove("active");
+});
+
+sideViewButton.addEventListener("click", function () {
+  sideViewButton.classList.add("active");
+  frontViewButton.classList.remove("active");
+  frontPreview.classList.add("hidden");
+  sidePreview.classList.add("active");
+});
+
+// Select a nail by clicking it directly on the hand.
+handNails.forEach(function (nailElement) {
+  nailElement.addEventListener("click", function () {
+    selectNail(Number(nailElement.dataset.nail));
+  });
+});
+
+// Update the selected nail live whenever a tool changes.
+[
+  baseColorPicker,
+  tipColorPicker,
+  frenchToggle,
+  chromeToggle,
+  glitterToggle,
+  rhinestonesToggle,
+  charmToggle,
+  auraToggle
+].forEach(function (control) {
+  control.addEventListener("input", updateSelectedNailFromControls);
+  control.addEventListener("change", updateSelectedNailFromControls);
+});
+
+clearNailButton.addEventListener("click", clearSelectedNail);
+applyAllButton.addEventListener("click", applySelectedNailToAll);
+randomizeButton.addEventListener("click", randomizeDesign);
+generateSimilarButton.addEventListener("click", function () {
+  randomizeDesign();
+  currentSet = generateNailSet();
+  currentSet.createdAt = Date.now();
+  displayGeneratedSet(currentSet);
+  saveStatus.textContent = "Generated a similar set.";
+});
+
 copyPromptButton.addEventListener("click", function () {
   copyText(imagePrompt.textContent, "Prompt copied.");
 });
@@ -970,3 +1285,5 @@ saveToWikiButton.addEventListener("click", saveGeneratedSetToWiki);
 // Load color tools when the page opens.
 renderColorStudio();
 renderSavedPalettes();
+syncNailControls();
+renderHandPreview();
