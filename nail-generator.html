@@ -74,14 +74,14 @@
 
         <fieldset class="addons-fieldset">
           <legend>Add-ons</legend>
-          <label><input type="checkbox" value="chrome"><span class="addon-symbol">◐</span><span>Chrome</span></label>
-          <label><input type="checkbox" value="rhinestones"><span class="addon-symbol">◇</span><span>Rhinestones</span></label>
-          <label><input type="checkbox" value="3D bows"><span class="addon-symbol">🎀</span><span>3D bows</span></label>
-          <label><input type="checkbox" value="pearls"><span class="addon-symbol">○</span><span>Pearls</span></label>
-          <label><input type="checkbox" value="french tips"><span class="addon-symbol">◒</span><span>French tips</span></label>
-          <label><input type="checkbox" value="airbrush aura"><span class="addon-symbol">✦</span><span>Airbrush aura</span></label>
-          <label><input type="checkbox" value="charms"><span class="addon-symbol">♡</span><span>Charms</span></label>
-          <label><input type="checkbox" value="glitter"><span class="addon-symbol">✧</span><span>Glitter</span></label>
+          <label><input type="checkbox" value="chrome"> Chrome</label>
+          <label><input type="checkbox" value="rhinestones"> Rhinestones</label>
+          <label><input type="checkbox" value="3D bows"> 3D bows</label>
+          <label><input type="checkbox" value="pearls"> Pearls</label>
+          <label><input type="checkbox" value="french tips"> French tips</label>
+          <label><input type="checkbox" value="airbrush aura"> Airbrush aura</label>
+          <label><input type="checkbox" value="charms"> Charms</label>
+          <label><input type="checkbox" value="glitter"> Glitter</label>
         </fieldset>
 
         <h3>♡ 2. Nail Details</h3>
@@ -157,90 +157,6 @@
         <p id="saveStatus" class="save-status" aria-live="polite"></p>
       </form>
 
-      <!-- Live virtual hand preview -->
-      <section class="generator-card hand-preview-card">
-        <div class="preview-header">
-          <div>
-            <p class="eyebrow">live design preview</p>
-            <h2>Virtual Hand Preview</h2>
-          </div>
-          <div class="view-tabs" aria-label="Preview view">
-            <button type="button" id="frontViewButton" class="active">Front</button>
-            <button type="button" id="sideViewButton">Side</button>
-          </div>
-        </div>
-
-        <div id="frontPreview" class="virtual-hand-stage">
-          <div class="virtual-hand">
-            <button type="button" class="hand-nail thumb" data-nail="0" aria-label="Customize thumb nail">
-              <span class="nail-number">1</span>
-              <span class="nail-art"></span>
-            </button>
-            <button type="button" class="hand-nail index" data-nail="1" aria-label="Customize index nail">
-              <span class="nail-number">2</span>
-              <span class="nail-art"></span>
-            </button>
-            <button type="button" class="hand-nail middle" data-nail="2" aria-label="Customize middle nail">
-              <span class="nail-number">3</span>
-              <span class="nail-art"></span>
-            </button>
-            <button type="button" class="hand-nail ring" data-nail="3" aria-label="Customize ring nail">
-              <span class="nail-number">4</span>
-              <span class="nail-art"></span>
-            </button>
-            <button type="button" class="hand-nail pinky" data-nail="4" aria-label="Customize pinky nail">
-              <span class="nail-number">5</span>
-              <span class="nail-art"></span>
-            </button>
-            <div class="hand-palm"></div>
-            <div class="finger finger-thumb"></div>
-            <div class="finger finger-index"></div>
-            <div class="finger finger-middle"></div>
-            <div class="finger finger-ring"></div>
-            <div class="finger finger-pinky"></div>
-          </div>
-        </div>
-
-        <div id="sidePreview" class="side-preview-panel">
-          <h3>Side View</h3>
-          <p>Side profile preview placeholder. Front view is fully customizable for now.</p>
-          <div class="side-nail-demo"></div>
-        </div>
-
-        <div class="nail-selector-panel">
-          <p>Select a nail to customize</p>
-          <div id="nailSelectorButtons" class="nail-selector-buttons"></div>
-        </div>
-
-        <div class="nail-tools-panel">
-          <div class="tool-grid">
-            <label>
-              Base Color
-              <input type="color" id="baseColorPicker">
-            </label>
-            <label>
-              Tip Color
-              <input type="color" id="tipColorPicker">
-            </label>
-          </div>
-
-          <div class="nail-option-grid">
-            <label><input type="checkbox" id="frenchToggle"><span class="addon-symbol">◒</span> French tip</label>
-            <label><input type="checkbox" id="chromeToggle"><span class="addon-symbol">◐</span> Chrome</label>
-            <label><input type="checkbox" id="glitterToggle"><span class="addon-symbol">✧</span> Glitter</label>
-            <label><input type="checkbox" id="rhinestonesToggle"><span class="addon-symbol">◇</span> Rhinestones</label>
-            <label><input type="checkbox" id="charmToggle"><span class="addon-symbol">♡</span> Charm</label>
-            <label><input type="checkbox" id="auraToggle"><span class="addon-symbol">✦</span> Aura/star</label>
-          </div>
-
-          <div class="preview-actions">
-            <button type="button" id="clearNailButton">Clear Nail</button>
-            <button type="button" id="applyAllButton">Apply to All Nails</button>
-            <button type="button" id="randomizeButton">Randomize Design</button>
-          </div>
-        </div>
-      </section>
-
       <!-- Generated results -->
       <section class="generator-card result-card">
         <div class="result-header">
@@ -284,12 +200,6 @@
           <h3>Finger-by-Finger Breakdown</h3>
           <ul id="fingerBreakdown"></ul>
 
-          <h3>Colors Used</h3>
-          <div id="colorsUsedList" class="color-used-list"></div>
-
-          <h3>Finishes</h3>
-          <div id="finishesList" class="finish-pill-list"></div>
-
           <h3>Products Needed</h3>
           <ul id="productsNeeded"></ul>
 
@@ -301,10 +211,6 @@
 
           <h3>AI Image Prompt</h3>
           <p id="imagePrompt" class="copy-box prompt-box"></p>
-
-          <div class="result-actions bottom-actions">
-            <button type="button" id="generateSimilarButton">Generate Similar</button>
-          </div>
         </div>
       </section>
     </section>

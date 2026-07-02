@@ -72,7 +72,7 @@ body::before {
 
 /* Page layout */
 .generator-page {
-  width: min(1460px, calc(100% - 28px));
+  width: min(1280px, calc(100% - 28px));
   margin: 26px auto 90px;
 }
 
@@ -104,7 +104,7 @@ h3 {
 
 .generator-layout {
   display: grid;
-  grid-template-columns: minmax(280px, 350px) minmax(360px, 1fr) minmax(300px, 380px);
+  grid-template-columns: minmax(290px, 370px) 1fr;
   gap: 18px;
   align-items: start;
 }
@@ -212,13 +212,6 @@ h3 {
   background-color: rgba(27, 7, 23, 0.55);
   box-shadow: inset 0 0 12px rgba(255, 105, 180, 0.06);
   text-align: center;
-}
-
-.addon-symbol {
-  color: #ff8fc8;
-  font-size: 20px;
-  line-height: 1;
-  text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
 }
 
 .addons-fieldset label:has(input:checked) {
@@ -530,9 +523,7 @@ h3 {
 }
 
 .primary-button,
-.result-actions button,
-.preview-actions button,
-.view-tabs button {
+.result-actions button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -550,386 +541,10 @@ h3 {
 }
 
 .primary-button:hover,
-.result-actions button:hover,
-.preview-actions button:hover,
-.view-tabs button:hover {
+.result-actions button:hover {
   background-color: #ff69b4;
   transform: translateY(-2px);
   box-shadow: 0 0 18px rgba(255, 105, 180, 0.8);
-}
-
-/* Virtual hand preview */
-.hand-preview-card {
-  padding: 20px;
-}
-
-.preview-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 14px;
-}
-
-.preview-header h2 {
-  margin: 0;
-  font-size: 25px;
-}
-
-.view-tabs {
-  display: flex;
-  gap: 8px;
-  padding: 5px;
-  border: 1px solid rgba(255, 105, 180, 0.32);
-  border-radius: 16px;
-  background-color: rgba(27, 7, 23, 0.56);
-}
-
-.view-tabs button {
-  min-height: 36px;
-  padding: 8px 16px;
-  background-color: transparent;
-  box-shadow: none;
-}
-
-.view-tabs button.active {
-  background-color: #ff4da6;
-  box-shadow: 0 0 16px rgba(255, 77, 166, 0.72);
-}
-
-.virtual-hand-stage {
-  display: grid;
-  min-height: 570px;
-  margin-top: 14px;
-  place-items: center;
-  border: 1px solid rgba(255, 105, 180, 0.35);
-  border-radius: 22px;
-  background:
-    radial-gradient(circle at 50% 18%, rgba(255, 105, 180, 0.18), transparent 35%),
-    linear-gradient(145deg, rgba(18, 5, 16, 0.62), rgba(51, 10, 38, 0.86));
-  overflow: hidden;
-}
-
-.virtual-hand {
-  position: relative;
-  width: min(100%, 520px);
-  height: 540px;
-}
-
-.hand-palm,
-.finger {
-  position: absolute;
-  background:
-    radial-gradient(circle at 32% 24%, rgba(255, 218, 196, 0.28), transparent 18%),
-    linear-gradient(90deg, #9a543d, #bf7658 45%, #8f4631);
-  box-shadow:
-    inset 12px 0 22px rgba(77, 28, 20, 0.2),
-    inset -10px 0 20px rgba(255, 221, 200, 0.12);
-}
-
-.hand-palm {
-  left: 155px;
-  bottom: -40px;
-  width: 220px;
-  height: 260px;
-  border-radius: 46% 46% 34% 34%;
-}
-
-.finger {
-  bottom: 135px;
-  width: 70px;
-  border-radius: 999px 999px 42px 42px;
-}
-
-.finger-index {
-  left: 155px;
-  height: 285px;
-  transform: rotate(-2deg);
-}
-
-.finger-middle {
-  left: 235px;
-  height: 340px;
-}
-
-.finger-ring {
-  left: 315px;
-  height: 270px;
-  transform: rotate(3deg);
-}
-
-.finger-pinky {
-  left: 392px;
-  bottom: 116px;
-  width: 58px;
-  height: 210px;
-  transform: rotate(8deg);
-}
-
-.finger-thumb {
-  left: 82px;
-  bottom: 96px;
-  width: 66px;
-  height: 185px;
-  transform: rotate(-30deg);
-}
-
-.hand-nail {
-  --base-color: #ffc1dd;
-  --tip-color: #fff9fb;
-  position: absolute;
-  z-index: 3;
-  width: 48px;
-  height: 88px;
-  border: 2px solid rgba(255, 255, 255, 0.26);
-  border-radius: 24px 24px 14px 14px;
-  background:
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.28), transparent 28%),
-    var(--base-color);
-  box-shadow:
-    inset 9px 0 12px rgba(255, 255, 255, 0.18),
-    inset -8px 0 10px rgba(80, 10, 45, 0.16),
-    0 0 18px rgba(255, 105, 180, 0.22);
-  cursor: pointer;
-  transition: 0.25s;
-}
-
-.hand-nail::before {
-  content: "";
-  position: absolute;
-  inset: 4px 10px auto auto;
-  width: 11px;
-  height: 40px;
-  border-radius: 999px;
-  background-color: rgba(255, 255, 255, 0.38);
-  transform: rotate(8deg);
-}
-
-.hand-nail.french::after {
-  content: "";
-  position: absolute;
-  left: 3px;
-  right: 3px;
-  top: 0;
-  height: 22px;
-  border-radius: 24px 24px 9px 9px;
-  background: var(--tip-color);
-}
-
-.hand-nail.chrome {
-  background:
-    linear-gradient(120deg, rgba(255, 255, 255, 0.72), transparent 20%, rgba(204, 205, 222, 0.9) 42%, transparent 64%),
-    var(--base-color);
-}
-
-.hand-nail.glitter {
-  background:
-    radial-gradient(circle at 28% 30%, rgba(255, 255, 255, 0.9) 0 2px, transparent 3px),
-    radial-gradient(circle at 70% 55%, rgba(255, 255, 255, 0.75) 0 2px, transparent 3px),
-    radial-gradient(circle at 48% 76%, rgba(255, 255, 255, 0.65) 0 1px, transparent 2px),
-    var(--base-color);
-}
-
-.hand-nail.selected {
-  border-color: #ff69b4;
-  box-shadow:
-    0 0 0 3px rgba(255, 105, 180, 0.24),
-    0 0 22px rgba(255, 105, 180, 0.86);
-}
-
-.nail-art {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.hand-nail.rhinestones .nail-art::before {
-  content: "";
-  position: absolute;
-  right: 8px;
-  top: 32px;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background-color: #f8f1ff;
-  box-shadow: -18px 18px 0 #f8f1ff, -4px 36px 0 #f8f1ff;
-}
-
-.hand-nail.charm .nail-art::after {
-  content: "♡";
-  position: absolute;
-  left: 12px;
-  top: 44px;
-  color: #ff8fc8;
-  font-size: 20px;
-  font-weight: bold;
-  text-shadow: 0 0 8px rgba(255, 105, 180, 0.95);
-}
-
-.hand-nail.aura .nail-art {
-  background:
-    radial-gradient(circle at 50% 58%, rgba(255, 255, 255, 0.45), transparent 26%),
-    radial-gradient(circle at 45% 38%, rgba(255, 105, 180, 0.58), transparent 20%);
-}
-
-.nail-number {
-  position: absolute;
-  top: -35px;
-  left: 50%;
-  display: grid;
-  width: 30px;
-  height: 30px;
-  place-items: center;
-  border: 1px solid #ff69b4;
-  border-radius: 50%;
-  background-color: rgba(62, 13, 47, 0.9);
-  color: #ffb6d9;
-  font-weight: bold;
-  transform: translateX(-50%);
-  box-shadow: 0 0 12px rgba(255, 105, 180, 0.5);
-}
-
-.hand-nail.thumb {
-  left: 72px;
-  top: 285px;
-  transform: rotate(-30deg);
-}
-
-.hand-nail.index {
-  left: 166px;
-  top: 114px;
-}
-
-.hand-nail.middle {
-  left: 246px;
-  top: 58px;
-}
-
-.hand-nail.ring {
-  left: 326px;
-  top: 136px;
-}
-
-.hand-nail.pinky {
-  left: 398px;
-  top: 230px;
-  width: 40px;
-  height: 76px;
-  transform: rotate(8deg);
-}
-
-.side-preview-panel {
-  display: none;
-  min-height: 570px;
-  margin-top: 14px;
-  place-items: center;
-  padding: 24px;
-  border: 1px dashed rgba(255, 182, 217, 0.42);
-  border-radius: 22px;
-  background-color: rgba(27, 7, 23, 0.5);
-  text-align: center;
-}
-
-.side-preview-panel.active {
-  display: grid;
-}
-
-.virtual-hand-stage.hidden {
-  display: none;
-}
-
-.side-nail-demo {
-  width: 170px;
-  height: 42px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, #bf7658 0 52%, #ffc1dd 52%);
-  box-shadow: 0 0 22px rgba(255, 105, 180, 0.4);
-}
-
-.nail-selector-panel,
-.nail-tools-panel {
-  margin-top: 14px;
-  padding: 14px;
-  border: 1px solid rgba(255, 105, 180, 0.34);
-  border-radius: 18px;
-  background-color: rgba(27, 7, 23, 0.52);
-}
-
-.nail-selector-panel p {
-  margin: 0 0 10px;
-  color: #ffb6d9;
-  font-weight: bold;
-}
-
-.nail-selector-buttons,
-.nail-option-grid,
-.preview-actions,
-.tool-grid {
-  display: grid;
-  gap: 10px;
-}
-
-.nail-selector-buttons {
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-}
-
-.nail-selector-buttons button,
-.nail-option-grid label {
-  min-height: 42px;
-  border: 1px solid rgba(255, 105, 180, 0.34);
-  border-radius: 13px;
-  background-color: rgba(59, 16, 45, 0.72);
-  color: #ffe6f4;
-  font: inherit;
-}
-
-.nail-selector-buttons button {
-  cursor: pointer;
-}
-
-.nail-selector-buttons button.active,
-.nail-option-grid label:has(input:checked) {
-  border-color: #ff69b4;
-  box-shadow: 0 0 14px rgba(255, 105, 180, 0.56);
-}
-
-.tool-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-bottom: 12px;
-}
-
-.tool-grid label {
-  display: grid;
-  gap: 7px;
-  color: #ffb6d9;
-  font-weight: bold;
-}
-
-.tool-grid input[type="color"] {
-  width: 100%;
-  min-height: 44px;
-  padding: 5px;
-}
-
-.nail-option-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.nail-option-grid label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px;
-  cursor: pointer;
-  font-size: 14px;
-}
-
-.nail-option-grid input {
-  accent-color: #ff4da6;
-}
-
-.preview-actions {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-top: 12px;
 }
 
 /* Result panel */
@@ -1016,36 +631,6 @@ h3 {
   box-shadow: 0 0 16px rgba(255, 105, 180, 0.36);
 }
 
-.color-used-list,
-.finish-pill-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.detail-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  min-height: 34px;
-  padding: 8px 11px;
-  border: 1px solid rgba(255, 105, 180, 0.36);
-  border-radius: 999px;
-  background-color: rgba(34, 7, 27, 0.58);
-  color: #ffe6f4;
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.detail-pill.color-pill::before {
-  content: "";
-  width: 18px;
-  height: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.45);
-  border-radius: 50%;
-  background-color: var(--pill-color);
-}
-
 .stats-row {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1110,25 +695,7 @@ h3 {
   margin-top: 0;
 }
 
-.bottom-actions {
-  margin-top: 18px;
-}
-
 /* Mobile styling */
-@media (max-width: 1180px) {
-  .generator-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .hand-preview-card {
-    order: 2;
-  }
-
-  .result-card {
-    order: 3;
-  }
-}
-
 @media (max-width: 820px) {
   .navbar {
     align-items: flex-start;
@@ -1160,20 +727,14 @@ h3 {
     margin-top: 24px;
   }
 
+  .generator-layout {
+    grid-template-columns: 1fr;
+  }
+
   .generator-form,
-  .hand-preview-card,
   .result-card {
     padding: 18px;
     border-radius: 18px;
-  }
-
-  .virtual-hand-stage,
-  .side-preview-panel {
-    min-height: 470px;
-  }
-
-  .virtual-hand {
-    transform: scale(0.82);
   }
 
   .stats-row {
@@ -1192,12 +753,6 @@ h3 {
   .result-actions button,
   .primary-button {
     width: 100%;
-  }
-
-  .nail-selector-buttons,
-  .nail-option-grid,
-  .preview-actions {
-    grid-template-columns: 1fr;
   }
 }
 
@@ -1220,18 +775,5 @@ h3 {
   .palette-dot {
     width: 36px;
     height: 36px;
-  }
-
-  .virtual-hand-stage,
-  .side-preview-panel {
-    min-height: 390px;
-  }
-
-  .virtual-hand {
-    transform: scale(0.68);
-  }
-
-  .tool-grid {
-    grid-template-columns: 1fr;
   }
 }
