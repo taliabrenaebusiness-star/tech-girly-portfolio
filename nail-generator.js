@@ -28,8 +28,8 @@ const shapeInput = document.getElementById("shape");
 const designLevelInput = document.getElementById("designLevel");
 const presetSwatches = document.getElementById("presetSwatches");
 const customSwatches = document.getElementById("customSwatches");
+const colorPaletteTray = document.getElementById("colorPaletteTray");
 const selectedColorSummary = document.getElementById("selectedColorSummary");
-const addCustomColorButton = document.getElementById("addCustomColorButton");
 const customColorPicker = document.getElementById("customColorPicker");
 const paletteName = document.getElementById("paletteName");
 const savePaletteButton = document.getElementById("savePaletteButton");
@@ -341,6 +341,28 @@ function createColorSwatch(color, options) {
   return swatch;
 }
 
+// Show selected colors as large circular palette dots beside the plus button.
+function renderPaletteTray() {
+  const addColorControl = colorPaletteTray.querySelector(".add-color-control");
+
+  colorPaletteTray.querySelectorAll(".palette-tray-color").forEach(function (dot) {
+    dot.remove();
+  });
+
+  selectedColors.forEach(function (color) {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.className = "palette-tray-color selected";
+    dot.style.setProperty("--swatch-color", color.hex);
+    dot.title = "Remove " + color.name;
+    dot.addEventListener("click", function () {
+      toggleColor(color);
+    });
+
+    colorPaletteTray.insertBefore(dot, addColorControl);
+  });
+}
+
 // Show the selected colors, preset swatches, and custom swatches.
 function renderColorStudio() {
   presetSwatches.innerHTML = "";
@@ -359,6 +381,8 @@ function renderColorStudio() {
   } else {
     selectedColorSummary.textContent = "Selected: " + getColorText(selectedColors);
   }
+
+  renderPaletteTray();
 }
 
 // Add one custom color from the native color picker.
@@ -916,11 +940,6 @@ finalImageInput.addEventListener("change", function () {
 
   imagePreview.src = URL.createObjectURL(file);
   imagePreview.style.display = "block";
-});
-
-// Open the native color picker.
-addCustomColorButton.addEventListener("click", function () {
-  customColorPicker.click();
 });
 
 // Add a custom swatch after the user chooses a color.
