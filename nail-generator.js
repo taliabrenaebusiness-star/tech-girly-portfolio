@@ -39,6 +39,7 @@ const finalImageInput = document.getElementById("finalImage");
 const imagePreview = document.getElementById("imagePreview");
 const saveStatus = document.getElementById("saveStatus");
 
+const resultCard = document.getElementById("resultCard");
 const setName = document.getElementById("setName");
 const difficultyBadge = document.getElementById("difficultyBadge");
 const emptyResult = document.getElementById("emptyResult");
@@ -760,6 +761,7 @@ function displayGeneratedSet(generatedSet) {
   fillList(techniqueTips, generatedSet.tips);
   displayPalette(generatedSet.choices.colors);
 
+  resultCard.classList.add("has-result");
   emptyResult.style.display = "none";
   resultContent.style.display = "block";
 }
@@ -767,6 +769,7 @@ function displayGeneratedSet(generatedSet) {
 // Copy text to the clipboard.
 async function copyText(text, successMessage) {
   if (!text) {
+    saveStatus.textContent = "Generate a nail set first.";
     return;
   }
 

@@ -93,7 +93,8 @@ h1 {
   margin: 0;
   color: #ff5faf;
   font-family: monospace;
-  font-size: clamp(42px, 8vw, 78px);
+  font-size: clamp(34px, 5vw, 58px);
+  line-height: 1.05;
   text-shadow: 0 0 18px rgba(255, 95, 175, 0.75);
 }
 
@@ -577,9 +578,14 @@ h3 {
 }
 
 .top-actions {
+  display: none;
   justify-content: flex-end;
-  margin: -50px 0 12px auto;
+  margin: 0 0 12px auto;
   padding-right: 4px;
+}
+
+.result-card.has-result .top-actions {
+  display: flex;
 }
 
 .top-actions button {
@@ -591,7 +597,7 @@ h3 {
 
 .empty-result {
   display: grid;
-  min-height: 420px;
+  min-height: 300px;
   place-items: center;
   color: #ffc1dd;
   text-align: center;
@@ -602,6 +608,10 @@ h3 {
 .result-content {
   display: none;
   padding-top: 10px;
+}
+
+.result-card.has-result .empty-result {
+  display: none;
 }
 
 .nail-preview-panel {
