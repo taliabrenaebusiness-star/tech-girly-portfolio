@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nail Set Generator</title>
+  <meta name="apple-mobile-web-app-title" content="Talia Wiki">
+  <link rel="apple-touch-icon" href="talia-wiki-icon.png">
+  <link rel="icon" type="image/png" href="talia-wiki-icon.png">
+  <link rel="stylesheet" href="nail-generator.css">
+</head>
+<body>
+  <!-- Main portfolio navigation -->
+  <div class="navbar">
+    <h2 class="logo">Tech Girly🎀</h2>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="wiki.html">Talia Wiki</a>
+      <a href="nail-generator.html" class="active">Nail Generator</a>
+      <a href="mailto:taliabrenaebusiness@gmail.com">Contact</a>
+    </div>
+  </div>
+
+  <main class="generator-page">
+    <!-- Generator title -->
+    <section class="generator-hero">
+      <div>
+        <p class="eyebrow">free prompt-based nail planning</p>
+        <h1>Nail Set Generator</h1>
+      </div>
+      <p class="hero-note">Create your perfect nail set idea, save it to Wiki, and copy a prompt for any image generator you choose.</p>
+    </section>
+
+    <section class="generator-layout">
+      <!-- User choices -->
+      <form id="generatorForm" class="generator-card generator-form">
+        <div class="form-title">
+          <span>✦</span>
+          <div>
+            <h2>Nail Set Generator</h2>
+            <p>Create your perfect nail set idea in seconds.</p>
+          </div>
+        </div>
+
+        <h3>♡ 1. Choose Your Vibe</h3>
+        <label for="occasion">Occasion</label>
+        <select id="occasion" required>
+          <option value="Everyday glam">Everyday glam</option>
+          <option value="Birthday">Birthday</option>
+          <option value="Vacation">Vacation</option>
+          <option value="Date night">Date night</option>
+          <option value="Work friendly">Work friendly</option>
+          <option value="Holiday">Holiday</option>
+          <option value="Photoshoot">Photoshoot</option>
+        </select>
+
+        <label for="vibe">Vibe / Style</label>
+        <select id="vibe" required>
+          <option value="soft coquette">Soft coquette</option>
+          <option value="clean girl">Clean girl</option>
+          <option value="luxury baddie">Luxury baddie</option>
+          <option value="romantic glam">Romantic glam</option>
+          <option value="y2k girly">Y2K girly</option>
+          <option value="minimal chic">Minimal chic</option>
+          <option value="bold editorial">Bold editorial</option>
+        </select>
+
+        <label for="designLevel">Design Level</label>
+        <select id="designLevel" required>
+          <option value="simple">Simple</option>
+          <option value="medium">Medium</option>
+          <option value="detailed">Detailed</option>
+          <option value="extra">Extra</option>
+        </select>
+
+        <fieldset class="addons-fieldset">
+          <legend>Add-ons</legend>
+          <label><input type="checkbox" value="chrome"> Chrome</label>
+          <label><input type="checkbox" value="rhinestones"> Rhinestones</label>
+          <label><input type="checkbox" value="3D bows"> 3D bows</label>
+          <label><input type="checkbox" value="pearls"> Pearls</label>
+          <label><input type="checkbox" value="french tips"> French tips</label>
+          <label><input type="checkbox" value="airbrush aura"> Airbrush aura</label>
+          <label><input type="checkbox" value="charms"> Charms</label>
+          <label><input type="checkbox" value="glitter"> Glitter</label>
+        </fieldset>
+
+        <h3>♡ 2. Nail Details</h3>
+        <div class="form-grid">
+          <div>
+            <label for="length">Length</label>
+            <select id="length" required>
+              <option value="short">Short</option>
+              <option value="medium">Medium</option>
+              <option value="long">Long</option>
+              <option value="extra long">Extra long</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="shape">Shape</label>
+            <select id="shape" required>
+              <option value="almond">Almond</option>
+              <option value="square">Square</option>
+              <option value="coffin">Coffin</option>
+              <option value="stiletto">Stiletto</option>
+              <option value="oval">Oval</option>
+              <option value="squoval">Squoval</option>
+            </select>
+          </div>
+        </div>
+
+        <label for="colors">Color Palette</label>
+        <input type="text" id="colors" placeholder="example: baby pink, chrome silver, milky white" required>
+
+        <!-- Manual final-image placeholder -->
+        <div class="upload-zone">
+          <label for="finalImage">Upload Final Image Later</label>
+          <input type="file" id="finalImage" accept="image/*">
+          <p>This is optional. It attaches your final nail image when you save the set to Wiki.</p>
+          <img id="imagePreview" class="image-preview" alt="">
+        </div>
+
+        <button type="submit" class="primary-button">✨ Generate Nail Set</button>
+        <p id="saveStatus" class="save-status" aria-live="polite"></p>
+      </form>
+
+      <!-- Generated results -->
+      <section class="generator-card result-card">
+        <div class="result-header">
+          <div>
+            <p class="eyebrow">your generated nail set</p>
+            <h2 id="setName">Your Generated Nail Set 💅</h2>
+          </div>
+          <span id="difficultyBadge" class="difficulty-badge">Ready</span>
+        </div>
+
+        <div class="result-actions top-actions">
+          <button type="button" id="saveToWikiButton">Save to Wiki</button>
+          <button type="button" id="copyPromptButton">Copy Prompt</button>
+          <button type="button" id="copyClientButton">Copy Client Message</button>
+        </div>
+
+        <div id="emptyResult" class="empty-result">
+          Choose your details, then generate a full nail plan with a copyable image prompt.
+        </div>
+
+        <div id="resultContent" class="result-content">
+          <div class="nail-preview-panel">
+            <div id="palettePreview" class="palette-preview"></div>
+            <div class="preview-placeholder">
+              <span>⌁</span>
+              <p>Paste the prompt into your favorite image generator, then upload the final image on the left.</p>
+            </div>
+          </div>
+
+          <div class="stats-row">
+            <div>
+              <span>Estimated Time</span>
+              <strong id="estimatedTime"></strong>
+            </div>
+            <div>
+              <span>Estimated Price</span>
+              <strong id="estimatedPrice"></strong>
+            </div>
+            <div>
+              <span>Difficulty</span>
+              <strong id="difficultyText"></strong>
+            </div>
+          </div>
+
+          <h3>Finger-by-Finger Breakdown</h3>
+          <ul id="fingerBreakdown"></ul>
+
+          <h3>Products Needed</h3>
+          <ul id="productsNeeded"></ul>
+
+          <h3>Technique Tips</h3>
+          <ul id="techniqueTips"></ul>
+
+          <h3>Client Message</h3>
+          <p id="clientMessage" class="copy-box"></p>
+
+          <h3>AI Image Prompt</h3>
+          <p id="imagePrompt" class="copy-box prompt-box"></p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script type="module" src="nail-generator.js"></script>
+</body>
+</html>
