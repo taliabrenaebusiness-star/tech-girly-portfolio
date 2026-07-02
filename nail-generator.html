@@ -111,8 +111,35 @@
           </div>
         </div>
 
-        <label for="colors">Color Palette</label>
-        <input type="text" id="colors" placeholder="example: baby pink, chrome silver, milky white" required>
+        <!-- Premium color palette builder -->
+        <section class="color-studio" aria-labelledby="colorStudioTitle">
+          <div class="color-studio-header">
+            <div>
+              <h3 id="colorStudioTitle">♡ 3. Color Studio</h3>
+              <p>Select swatches, add custom shades, or save your favorite palettes.</p>
+            </div>
+            <button type="button" id="addCustomColorButton" class="ghost-button">🎨 Add Custom Color</button>
+            <input type="color" id="customColorPicker" class="hidden-color-picker" aria-label="Choose custom color">
+          </div>
+
+          <div id="selectedColorSummary" class="selected-color-summary">No colors selected yet. I can create a matching palette for you.</div>
+
+          <div id="presetSwatches" class="swatch-grid" aria-label="Preset color swatches"></div>
+
+          <div class="custom-color-panel">
+            <h4>Custom Colors</h4>
+            <div id="customSwatches" class="swatch-grid compact-swatches"></div>
+          </div>
+
+          <div class="palette-manager">
+            <div class="palette-actions">
+              <input type="text" id="paletteName" placeholder="Palette name, example: Soft Pink">
+              <button type="button" id="savePaletteButton">Save Palette</button>
+              <button type="button" id="saveGeneratedPaletteButton">Save Generated Palette</button>
+            </div>
+            <div id="savedPalettes" class="saved-palettes" aria-label="Saved color palettes"></div>
+          </div>
+        </section>
 
         <!-- Manual final-image placeholder -->
         <div class="upload-zone">
