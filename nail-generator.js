@@ -86,14 +86,12 @@ let generatedPalette = [];
 let selectedNailIndex = 0;
 
 const nailNames = ["Thumb", "Index", "Middle", "Ring", "Pinky"];
-const blankNailBase = "#e4ad9d";
-const blankNailTip = "#fff4f7";
 let nailDesigns = [
-  createDefaultNail(),
-  createDefaultNail(),
-  createDefaultNail(),
-  createDefaultNail(),
-  createDefaultNail()
+  createDefaultNail("#f2a1a7", "#f5f0f4", true, true),
+  createDefaultNail("#ffc1dd", "#fff1f6", false, false),
+  createDefaultNail("#ff8fc8", "#fff9fb", false, false),
+  createDefaultNail("#c97991", "#fff1f6", false, false),
+  createDefaultNail("#f2a1a7", "#d9d9e8", true, true)
 ];
 
 const levelDetails = {
@@ -276,10 +274,10 @@ function getSelectedAddOns() {
 // Create the starting design for one nail.
 function createDefaultNail(baseColor, tipColor, french, chrome) {
   return {
-    baseColor: baseColor || blankNailBase,
-    tipColor: tipColor || blankNailTip,
-    french: french || false,
-    chrome: chrome || false,
+    baseColor: baseColor,
+    tipColor: tipColor,
+    french: french,
+    chrome: chrome,
     glitter: false,
     rhinestones: false,
     charm: false,
@@ -438,7 +436,7 @@ function updateSelectedNailFromControls() {
 
 // Clear the selected nail back to a simple glossy color.
 function clearSelectedNail() {
-  nailDesigns[selectedNailIndex] = createDefaultNail();
+  nailDesigns[selectedNailIndex] = createDefaultNail("#ffc1dd", "#fff9fb", false, false);
   syncNailControls();
   renderHandPreview();
 }

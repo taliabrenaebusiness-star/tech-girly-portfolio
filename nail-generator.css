@@ -598,106 +598,97 @@ h3 {
 
 .virtual-hand-stage {
   display: grid;
-  min-height: 650px;
+  min-height: 570px;
   margin-top: 14px;
   place-items: center;
-  border: 1px solid rgba(255, 105, 180, 0.5);
-  border-radius: 26px;
+  border: 1px solid rgba(255, 105, 180, 0.35);
+  border-radius: 22px;
   background:
-    radial-gradient(circle at 42% 18%, rgba(255, 105, 180, 0.2), transparent 34%),
-    radial-gradient(circle at 72% 46%, rgba(255, 156, 204, 0.14), transparent 30%),
-    linear-gradient(145deg, rgba(18, 5, 16, 0.72), rgba(51, 10, 38, 0.9));
-  box-shadow:
-    inset 0 0 44px rgba(255, 105, 180, 0.1),
-    0 0 24px rgba(255, 77, 166, 0.18);
+    radial-gradient(circle at 50% 18%, rgba(255, 105, 180, 0.18), transparent 35%),
+    linear-gradient(145deg, rgba(18, 5, 16, 0.62), rgba(51, 10, 38, 0.86));
   overflow: hidden;
 }
 
 .virtual-hand {
   position: relative;
-  width: min(100%, 600px);
-  height: 620px;
+  width: min(100%, 520px);
+  height: 540px;
 }
 
 .hand-palm,
 .finger {
   position: absolute;
   background:
-    linear-gradient(90deg, rgba(94, 40, 27, 0.35), transparent 16%, rgba(255, 218, 194, 0.16) 44%, rgba(83, 32, 21, 0.32) 100%),
-    repeating-linear-gradient(0deg, rgba(255, 230, 218, 0.055) 0 2px, transparent 2px 12px),
-    radial-gradient(circle at 35% 18%, rgba(255, 218, 196, 0.32), transparent 18%),
-    linear-gradient(90deg, #985239, #c27a5a 45%, #8a432e);
+    radial-gradient(circle at 32% 24%, rgba(255, 218, 196, 0.28), transparent 18%),
+    linear-gradient(90deg, #9a543d, #bf7658 45%, #8f4631);
   box-shadow:
-    inset 14px 0 24px rgba(77, 28, 20, 0.24),
-    inset -12px 0 22px rgba(255, 221, 200, 0.13),
-    0 18px 32px rgba(20, 3, 14, 0.24);
+    inset 12px 0 22px rgba(77, 28, 20, 0.2),
+    inset -10px 0 20px rgba(255, 221, 200, 0.12);
 }
 
 .hand-palm {
-  left: 176px;
-  bottom: -58px;
-  width: 258px;
-  height: 315px;
+  left: 155px;
+  bottom: -40px;
+  width: 220px;
+  height: 260px;
   border-radius: 46% 46% 34% 34%;
 }
 
 .finger {
-  bottom: 158px;
-  width: 78px;
+  bottom: 135px;
+  width: 70px;
   border-radius: 999px 999px 42px 42px;
 }
 
 .finger-index {
-  left: 178px;
-  height: 330px;
+  left: 155px;
+  height: 285px;
   transform: rotate(-2deg);
 }
 
 .finger-middle {
-  left: 270px;
-  height: 392px;
+  left: 235px;
+  height: 340px;
 }
 
 .finger-ring {
-  left: 362px;
-  height: 318px;
+  left: 315px;
+  height: 270px;
   transform: rotate(3deg);
 }
 
 .finger-pinky {
-  left: 452px;
-  bottom: 136px;
-  width: 64px;
-  height: 245px;
+  left: 392px;
+  bottom: 116px;
+  width: 58px;
+  height: 210px;
   transform: rotate(8deg);
 }
 
 .finger-thumb {
-  left: 88px;
-  bottom: 112px;
-  width: 72px;
-  height: 220px;
+  left: 82px;
+  bottom: 96px;
+  width: 66px;
+  height: 185px;
   transform: rotate(-30deg);
 }
 
 .hand-nail {
-  --base-color: #e4ad9d;
-  --tip-color: #fff4f7;
+  --base-color: #ffc1dd;
+  --tip-color: #fff9fb;
   position: absolute;
   z-index: 3;
-  width: 56px;
-  height: 106px;
-  border: 2px solid rgba(255, 255, 255, 0.34);
-  border-radius: 28px 28px 15px 15px;
+  width: 48px;
+  height: 88px;
+  border: 2px solid rgba(255, 255, 255, 0.26);
+  border-radius: 24px 24px 14px 14px;
   background:
-    radial-gradient(ellipse at 42% 10%, rgba(255, 255, 255, 0.52), transparent 18%),
-    linear-gradient(100deg, rgba(255, 255, 255, 0.22), transparent 28%, rgba(105, 13, 54, 0.12) 70%),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.28), transparent 28%),
     var(--base-color);
   box-shadow:
-    inset 10px 0 14px rgba(255, 255, 255, 0.2),
-    inset -9px 0 12px rgba(80, 10, 45, 0.18),
-    0 0 18px rgba(255, 105, 180, 0.26),
-    0 12px 20px rgba(27, 4, 19, 0.28);
+    inset 9px 0 12px rgba(255, 255, 255, 0.18),
+    inset -8px 0 10px rgba(80, 10, 45, 0.16),
+    0 0 18px rgba(255, 105, 180, 0.22);
   cursor: pointer;
   transition: 0.25s;
 }
@@ -705,45 +696,36 @@ h3 {
 .hand-nail::before {
   content: "";
   position: absolute;
-  inset: 8px 12px auto auto;
-  z-index: 4;
-  width: 12px;
-  height: 48px;
+  inset: 4px 10px auto auto;
+  width: 11px;
+  height: 40px;
   border-radius: 999px;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.12));
-  filter: blur(0.2px);
+  background-color: rgba(255, 255, 255, 0.38);
   transform: rotate(8deg);
 }
 
 .hand-nail.french::after {
   content: "";
   position: absolute;
-  left: 4px;
-  right: 4px;
-  top: 3px;
-  z-index: 2;
-  height: 24px;
-  border-radius: 25px 25px 10px 10px;
-  background:
-    linear-gradient(105deg, rgba(255, 255, 255, 0.48), transparent 35%),
-    var(--tip-color);
-  box-shadow: inset 0 -4px 7px rgba(105, 13, 54, 0.13);
+  left: 3px;
+  right: 3px;
+  top: 0;
+  height: 22px;
+  border-radius: 24px 24px 9px 9px;
+  background: var(--tip-color);
 }
 
 .hand-nail.chrome {
   background:
-    linear-gradient(120deg, rgba(255, 255, 255, 0.86), transparent 18%, rgba(198, 198, 214, 0.96) 37%, rgba(255, 255, 255, 0.68) 47%, transparent 64%),
-    linear-gradient(90deg, rgba(106, 100, 124, 0.2), transparent 35%, rgba(255, 255, 255, 0.2)),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.72), transparent 20%, rgba(204, 205, 222, 0.9) 42%, transparent 64%),
     var(--base-color);
 }
 
 .hand-nail.glitter {
   background:
-    radial-gradient(circle at 28% 30%, rgba(255, 255, 255, 0.96) 0 2px, transparent 3px),
-    radial-gradient(circle at 70% 55%, rgba(255, 255, 255, 0.8) 0 2px, transparent 3px),
-    radial-gradient(circle at 48% 76%, rgba(255, 255, 255, 0.7) 0 1px, transparent 2px),
-    radial-gradient(circle at 62% 22%, rgba(255, 218, 247, 0.9) 0 1px, transparent 2px),
-    radial-gradient(circle at 33% 62%, rgba(255, 218, 247, 0.8) 0 1px, transparent 2px),
+    radial-gradient(circle at 28% 30%, rgba(255, 255, 255, 0.9) 0 2px, transparent 3px),
+    radial-gradient(circle at 70% 55%, rgba(255, 255, 255, 0.75) 0 2px, transparent 3px),
+    radial-gradient(circle at 48% 76%, rgba(255, 255, 255, 0.65) 0 1px, transparent 2px),
     var(--base-color);
 }
 
@@ -763,29 +745,24 @@ h3 {
 .hand-nail.rhinestones .nail-art::before {
   content: "";
   position: absolute;
-  right: 9px;
-  top: 34px;
-  width: 8px;
-  height: 8px;
+  right: 8px;
+  top: 32px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background:
-    radial-gradient(circle at 32% 30%, white, #f8f1ff 45%, #b7aec8 70%);
-  box-shadow:
-    -20px 18px 0 #f8f1ff,
-    -4px 39px 0 #f8f1ff,
-    0 0 8px rgba(255, 255, 255, 0.9),
-    -20px 18px 8px rgba(255, 255, 255, 0.55),
-    -4px 39px 8px rgba(255, 255, 255, 0.55);
+  background-color: #f8f1ff;
+  box-shadow: -18px 18px 0 #f8f1ff, -4px 36px 0 #f8f1ff;
 }
 
 .hand-nail.charm .nail-art::after {
-  content: "🎀";
+  content: "♡";
   position: absolute;
-  left: 50%;
-  top: 47px;
-  font-size: 23px;
-  transform: translateX(-50%);
-  filter: drop-shadow(0 0 8px rgba(255, 105, 180, 0.95));
+  left: 12px;
+  top: 44px;
+  color: #ff8fc8;
+  font-size: 20px;
+  font-weight: bold;
+  text-shadow: 0 0 8px rgba(255, 105, 180, 0.95);
 }
 
 .hand-nail.aura .nail-art {
@@ -796,11 +773,11 @@ h3 {
 
 .nail-number {
   position: absolute;
-  top: -39px;
+  top: -35px;
   left: 50%;
   display: grid;
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   place-items: center;
   border: 1px solid #ff69b4;
   border-radius: 50%;
@@ -812,31 +789,31 @@ h3 {
 }
 
 .hand-nail.thumb {
-  left: 76px;
-  top: 328px;
+  left: 72px;
+  top: 285px;
   transform: rotate(-30deg);
 }
 
 .hand-nail.index {
-  left: 189px;
-  top: 124px;
+  left: 166px;
+  top: 114px;
 }
 
 .hand-nail.middle {
-  left: 281px;
-  top: 52px;
+  left: 246px;
+  top: 58px;
 }
 
 .hand-nail.ring {
-  left: 373px;
-  top: 148px;
+  left: 326px;
+  top: 136px;
 }
 
 .hand-nail.pinky {
-  left: 463px;
-  top: 260px;
-  width: 47px;
-  height: 88px;
+  left: 398px;
+  top: 230px;
+  width: 40px;
+  height: 76px;
   transform: rotate(8deg);
 }
 
