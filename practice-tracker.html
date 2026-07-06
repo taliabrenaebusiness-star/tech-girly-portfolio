@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acrylic Practice Tracker</title>
+  <meta name="apple-mobile-web-app-title" content="Talia Wiki">
+  <link rel="apple-touch-icon" href="talia-wiki-icon.png">
+  <link rel="icon" type="image/png" href="talia-wiki-icon.png">
+  <link rel="stylesheet" href="wiki.css">
+  <link rel="stylesheet" href="practice-tracker.css">
+</head>
+<body class="dark-mode">
+  <!-- Main portfolio navigation -->
+  <div class="navbar">
+    <h2 class="logo">Tech Girly🎀</h2>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="wiki.html">Talia Wiki</a>
+      <a href="nail-generator.html">Nail Generator</a>
+      <a href="practice-tracker.html" class="active">⏱ Practice Tracker</a>
+      <a href="mailto:taliabrenaebusiness@gmail.com">Contact</a>
+    </div>
+  </div>
+
+  <main class="wiki-page tracker-page">
+    <!-- Page title -->
+    <section class="hero-section tracker-hero">
+      <p class="eyebrow">acrylic speed practice</p>
+      <h1>Practice Tracker</h1>
+    </section>
+
+    <!-- Dashboard stats -->
+    <section class="tracker-card dashboard-section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">dashboard</p>
+          <h2>Acrylic Set Stats</h2>
+        </div>
+        <button type="button" id="startSetButton" class="primary-tracker-button">Start Set</button>
+      </div>
+
+      <div class="stats-grid">
+        <article class="stat-card">
+          <span>Average set time</span>
+          <strong id="averageTime">--</strong>
+        </article>
+        <article class="stat-card">
+          <span>Total sets completed</span>
+          <strong id="totalSets">0</strong>
+        </article>
+        <article class="stat-card">
+          <span>Fastest set</span>
+          <strong id="fastestTime">--</strong>
+        </article>
+        <article class="stat-card">
+          <span>Last set time</span>
+          <strong id="lastSetTime">--</strong>
+        </article>
+        <article class="stat-card">
+          <span>Total practice time</span>
+          <strong id="totalPracticeTime">--</strong>
+        </article>
+        <article class="stat-card">
+          <span>Current streak</span>
+          <strong id="currentStreak">0 days</strong>
+        </article>
+      </div>
+    </section>
+
+    <!-- Timer workspace -->
+    <section id="timerSection" class="tracker-card timer-section hidden">
+      <p class="eyebrow">practice timer</p>
+      <h2 id="timerTitle">Set in Progress</h2>
+      <div id="timerDisplay" class="timer-display">00:00:00</div>
+      <p id="timerStatus" class="timer-status">Timer is running.</p>
+
+      <div class="timer-actions">
+        <button type="button" id="pauseButton">Pause</button>
+        <button type="button" id="resumeButton" class="hidden">Resume</button>
+        <button type="button" id="cancelButton" class="secondary-tracker-button">Cancel</button>
+        <button type="button" id="finishButton" class="primary-tracker-button">Finish Set</button>
+      </div>
+    </section>
+
+    <!-- Finished set review -->
+    <section id="finishSection" class="tracker-card finish-section hidden">
+      <p class="eyebrow">completed set</p>
+      <h2>Finished Time</h2>
+      <div id="completedTime" class="completed-time">00:00:00</div>
+
+      <div id="personalBestMessage" class="personal-best hidden"></div>
+
+      <div class="timer-actions">
+        <button type="button" id="saveSetButton" class="primary-tracker-button">Save Set</button>
+        <button type="button" id="discardSetButton" class="secondary-tracker-button">Discard</button>
+      </div>
+    </section>
+
+    <section class="tracker-layout">
+      <!-- Progress chart -->
+      <section class="tracker-card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">progress</p>
+            <h2>Set Times Over Time</h2>
+          </div>
+        </div>
+        <div id="progressChart" class="progress-chart"></div>
+        <p id="progressEmpty" class="tracker-empty">Save a few sets to see your progress here.</p>
+      </section>
+
+      <!-- Milestones -->
+      <section class="tracker-card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">milestones</p>
+            <h2>Practice Goals</h2>
+          </div>
+        </div>
+        <div id="milestoneList" class="milestone-list"></div>
+      </section>
+    </section>
+
+    <!-- History list -->
+    <section class="tracker-card history-section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">history</p>
+          <h2>Saved Sets</h2>
+        </div>
+      </div>
+      <div id="historyList" class="history-list"></div>
+      <p id="historyEmpty" class="tracker-empty">No saved sets yet. Start a set when you are ready.</p>
+    </section>
+  </main>
+
+  <!-- Dark mode toggle that matches Talia Wiki -->
+  <button type="button" id="darkModeToggle" class="dark-mode-toggle" aria-label="Turn dark mode off">
+    <span class="toggle-text">Dark Mode</span>
+    <span class="toggle-switch">
+      <span class="toggle-dot"></span>
+    </span>
+  </button>
+
+  <script src="practice-tracker.js"></script>
+</body>
+</html>
