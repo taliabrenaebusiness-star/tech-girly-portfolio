@@ -350,10 +350,10 @@ function renderMilestones() {
     milestoneItem.className = "milestone-item" + (milestone.complete ? " complete" : "");
     milestoneItem.innerHTML =
       "<span class='milestone-check'>✓</span>" +
-      "<span>" +
+      "<div class='milestone-copy'>" +
       "<span class='milestone-title'>" + milestone.title + "</span>" +
       "<span class='milestone-detail'>" + milestone.detail + "</span>" +
-      "</span>";
+      "</div>";
 
     milestoneList.appendChild(milestoneItem);
   });

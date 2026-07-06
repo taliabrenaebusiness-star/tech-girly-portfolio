@@ -250,17 +250,23 @@
   color: white;
 }
 
+.milestone-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
 .milestone-title {
-  display: block;
   color: #ffe6f4;
   font-weight: bold;
+  line-height: 1.25;
 }
 
 .milestone-detail {
-  display: block;
-  margin-top: 8px;
   color: #ffc1dd;
   font-size: 14px;
+  line-height: 1.45;
 }
 
 /* History */
