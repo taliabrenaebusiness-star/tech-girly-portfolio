@@ -251,12 +251,14 @@
 }
 
 .milestone-title {
+  display: block;
   color: #ffe6f4;
   font-weight: bold;
 }
 
 .milestone-detail {
-  margin-top: 3px;
+  display: block;
+  margin-top: 8px;
   color: #ffc1dd;
   font-size: 14px;
 }
