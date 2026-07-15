@@ -89,6 +89,27 @@
             </div>
           </div>
 
+          <label for="appointmentDuration">Duration</label>
+          <select id="appointmentDuration">
+            <option value="60">1 hour</option>
+            <option value="90">1.5 hours</option>
+            <option value="120">2 hours</option>
+            <option value="150">2.5 hours</option>
+            <option value="180">3 hours</option>
+            <option value="210">3.5 hours</option>
+            <option value="240">4 hours</option>
+            <option value="custom">Custom</option>
+          </select>
+
+          <div id="customDurationWrap" class="custom-duration-wrap">
+            <label for="customDuration">Custom Duration Minutes</label>
+            <input type="number" id="customDuration" min="15" step="15" placeholder="example: 270">
+          </div>
+
+          <div class="form-note">
+            Estimated end time: <strong id="estimatedEndTime">Choose a time</strong>
+          </div>
+
           <label for="serviceType">Service</label>
           <select id="serviceType" required>
             <option value="">choose a service</option>
@@ -135,13 +156,42 @@
             </div>
           </div>
 
+          <div class="form-note balance-note">
+            Remaining balance: <strong id="remainingBalancePreview">$0</strong>
+          </div>
+
+          <div class="form-grid">
+            <div>
+              <label for="depositStatus">Deposit Status</label>
+              <select id="depositStatus">
+                <option value="Unpaid">Unpaid</option>
+                <option value="Paid">Paid</option>
+              </select>
+            </div>
+            <div>
+              <label for="depositMethod">Deposit Payment Method</label>
+              <select id="depositMethod">
+                <option value="">not paid yet</option>
+                <option value="Apple Pay/Card">Apple Pay/Card</option>
+                <option value="Cash App">Cash App</option>
+                <option value="Cash">Cash</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <label for="depositPaidDate">Deposit Paid Date</label>
+          <input type="date" id="depositPaidDate">
+
           <label for="appointmentStatus">Status</label>
           <select id="appointmentStatus">
-            <option value="Booked">Booked</option>
+            <option value="Inquiry">Inquiry</option>
+            <option value="Awaiting Deposit">Awaiting Deposit</option>
             <option value="Confirmed">Confirmed</option>
             <option value="Completed">Completed</option>
             <option value="Cancelled">Cancelled</option>
-            <option value="No Show">No Show</option>
+            <option value="No-show">No-show</option>
+            <option value="Rescheduled">Rescheduled</option>
           </select>
 
           <label for="appointmentNotes">Notes</label>
@@ -167,12 +217,25 @@
           <input type="search" id="appointmentSearch" placeholder="search clients..." aria-label="Search appointments">
           <select id="statusFilter" aria-label="Filter by status">
             <option value="all">All statuses</option>
-            <option value="Booked">Booked</option>
+            <option value="Inquiry">Inquiry</option>
+            <option value="Awaiting Deposit">Awaiting Deposit</option>
             <option value="Confirmed">Confirmed</option>
             <option value="Completed">Completed</option>
             <option value="Cancelled">Cancelled</option>
-            <option value="No Show">No Show</option>
+            <option value="No-show">No-show</option>
+            <option value="Rescheduled">Rescheduled</option>
           </select>
+          <select id="depositFilter" aria-label="Filter by deposit status">
+            <option value="all">All deposits</option>
+            <option value="Unpaid">Deposit unpaid</option>
+            <option value="Paid">Deposit paid</option>
+          </select>
+          <select id="paymentFilter" aria-label="Filter by payment status">
+            <option value="all">All balances</option>
+            <option value="paid">Paid in full</option>
+            <option value="balance">Balance due</option>
+          </select>
+          <input type="date" id="dateFilter" aria-label="Filter by appointment date">
           <select id="sortAppointments" aria-label="Sort appointments">
             <option value="upcoming">Upcoming first</option>
             <option value="newest">Newest added</option>
@@ -180,7 +243,15 @@
           </select>
         </div>
 
+        <div class="view-tabs" aria-label="Appointment view options">
+          <button type="button" id="listViewButton" class="active">List View</button>
+          <button type="button" id="calendarViewButton">Calendar View</button>
+        </div>
+
+        <p id="copyStatus" class="copy-status" aria-live="polite"></p>
+
         <div id="appointmentsList" class="appointments-list"></div>
+        <div id="calendarView" class="calendar-view hidden"></div>
         <p id="emptyAppointments" class="appointment-empty">No appointments yet. Add your first client booking.</p>
       </section>
     </section>

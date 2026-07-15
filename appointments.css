@@ -89,7 +89,9 @@
 .appointment-form select,
 .appointment-form textarea,
 .appointment-tools input,
-.appointment-tools select {
+.appointment-tools select,
+.view-tabs button,
+.calendar-appointment {
   width: 100%;
   padding: 13px 14px;
   border: 2px solid #a8447b;
@@ -99,6 +101,11 @@
   font: inherit;
   font-size: 16px;
   outline: none;
+}
+
+.custom-duration-wrap {
+  display: grid;
+  gap: 8px;
 }
 
 .appointment-form textarea {
@@ -125,6 +132,23 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
+}
+
+.form-note {
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 182, 217, 0.24);
+  border-radius: 16px;
+  background-color: rgba(255, 182, 217, 0.08);
+  color: #ffc1dd;
+  line-height: 1.4;
+}
+
+.form-note strong {
+  color: #ffe6f4;
+}
+
+.balance-note {
+  border-color: rgba(255, 105, 180, 0.42);
 }
 
 .form-actions {
@@ -170,9 +194,38 @@
 /* Appointment tools and cards */
 .appointment-tools {
   display: grid;
-  grid-template-columns: 1.3fr 0.85fr 0.85fr;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 10px;
   margin-bottom: 16px;
+}
+
+.view-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.view-tabs button {
+  width: auto;
+  min-width: 130px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.25s;
+}
+
+.view-tabs button.active,
+.view-tabs button:hover {
+  border-color: #ff69b4;
+  background-color: rgba(255, 105, 180, 0.22);
+  box-shadow: 0 0 14px rgba(255, 105, 180, 0.28);
+}
+
+.copy-status {
+  min-height: 22px;
+  margin: 0 0 12px;
+  color: #ffc1dd;
+  font-weight: bold;
 }
 
 .appointments-list {
@@ -209,6 +262,14 @@
   font-weight: bold;
 }
 
+.badge-group {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 .status-pill {
   flex-shrink: 0;
   padding: 7px 12px;
@@ -217,6 +278,34 @@
   color: #ffc1dd;
   font-size: 13px;
   font-weight: bold;
+}
+
+.deposit-pill {
+  flex-shrink: 0;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.deposit-paid {
+  background-color: rgba(82, 196, 161, 0.18);
+  color: #9ff0d1;
+}
+
+.deposit-unpaid {
+  background-color: rgba(255, 105, 180, 0.16);
+  color: #ffc1dd;
+}
+
+.status-inquiry {
+  background-color: rgba(255, 182, 217, 0.14);
+  color: #ffc1dd;
+}
+
+.status-awaiting-deposit {
+  background-color: rgba(255, 211, 128, 0.16);
+  color: #ffe0a6;
 }
 
 .status-confirmed {
@@ -230,7 +319,8 @@
 }
 
 .status-cancelled,
-.status-no-show {
+.status-no-show,
+.status-rescheduled {
   background-color: rgba(154, 47, 105, 0.34);
   color: #ffc1dd;
 }
@@ -285,6 +375,46 @@
   text-align: center;
 }
 
+.calendar-view {
+  display: grid;
+  gap: 14px;
+}
+
+.calendar-day {
+  padding: 16px;
+  border: 1px solid rgba(255, 182, 217, 0.28);
+  border-radius: 18px;
+  background-color: rgba(39, 21, 36, 0.78);
+}
+
+.calendar-day h3 {
+  margin: 0 0 12px;
+  color: #ffe6f4;
+}
+
+.calendar-appointment {
+  display: grid;
+  gap: 4px;
+  margin-top: 10px;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.calendar-appointment:hover {
+  border-color: #ff69b4;
+  box-shadow: 0 0 14px rgba(255, 105, 180, 0.28);
+}
+
+.calendar-appointment strong {
+  color: #ffe6f4;
+}
+
+.calendar-appointment span,
+.calendar-appointment small {
+  color: #ffc1dd;
+}
+
 /* Mobile layout */
 @media (max-width: 900px) {
   .appointment-page {
@@ -305,8 +435,13 @@
   }
 
   .form-actions button,
-  .appointment-card-button {
+  .appointment-card-button,
+  .view-tabs button {
     width: 100%;
+  }
+
+  .badge-group {
+    justify-content: flex-start;
   }
 }
 
