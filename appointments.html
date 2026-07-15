@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Appointments</title>
+  <meta name="apple-mobile-web-app-title" content="Talia Wiki">
+  <link rel="apple-touch-icon" href="talia-wiki-icon.png">
+  <link rel="icon" type="image/png" href="talia-wiki-icon.png">
+  <link rel="stylesheet" href="wiki.css">
+  <link rel="stylesheet" href="appointments.css">
+</head>
+<body class="dark-mode">
+  <!-- Main portfolio navigation -->
+  <div class="navbar">
+    <h2 class="logo">Tech Girly🎀</h2>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="wiki.html">Talia Wiki</a>
+      <a href="nail-generator.html">Nail Generator</a>
+      <a href="practice-tracker.html">⏱ Practice Tracker</a>
+      <a href="appointments.html" class="active">📅 Appointments</a>
+      <a href="mailto:taliabrenaebusiness@gmail.com">Contact</a>
+    </div>
+  </div>
+
+  <main class="wiki-page appointment-page">
+    <!-- Page title -->
+    <section class="hero-section appointment-hero">
+      <p class="eyebrow">client schedule</p>
+      <h1>Appointments</h1>
+    </section>
+
+    <!-- Dashboard summary -->
+    <section class="appointment-card">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">overview</p>
+          <h2>Client Booking Dashboard</h2>
+        </div>
+      </div>
+
+      <div class="appointment-stats">
+        <article class="appointment-stat">
+          <span>Upcoming</span>
+          <strong id="upcomingCount">0</strong>
+        </article>
+        <article class="appointment-stat">
+          <span>Today</span>
+          <strong id="todayCount">0</strong>
+        </article>
+        <article class="appointment-stat">
+          <span>Completed</span>
+          <strong id="completedCount">0</strong>
+        </article>
+        <article class="appointment-stat">
+          <span>Total expected</span>
+          <strong id="expectedTotal">$0</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="appointment-layout">
+      <!-- Appointment form -->
+      <section class="appointment-card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">new booking</p>
+            <h2 id="formTitle">Add Appointment</h2>
+          </div>
+        </div>
+
+        <form id="appointmentForm" class="appointment-form">
+          <label for="clientName">Client Name</label>
+          <input type="text" id="clientName" placeholder="example: Maya Johnson" required>
+
+          <label for="clientPhone">Phone or Instagram</label>
+          <input type="text" id="clientPhone" placeholder="example: @clientname or 555-1234">
+
+          <div class="form-grid">
+            <div>
+              <label for="appointmentDate">Date</label>
+              <input type="date" id="appointmentDate" required>
+            </div>
+            <div>
+              <label for="appointmentTime">Time</label>
+              <input type="time" id="appointmentTime" required>
+            </div>
+          </div>
+
+          <label for="serviceType">Service</label>
+          <select id="serviceType" required>
+            <option value="">choose a service</option>
+            <option value="Full Set">Full Set</option>
+            <option value="Fill In">Fill In</option>
+            <option value="Soak Off">Soak Off</option>
+            <option value="Nail Repair">Nail Repair</option>
+            <option value="Freestyle Set">Freestyle Set</option>
+            <option value="Consultation">Consultation</option>
+          </select>
+
+          <div class="form-grid">
+            <div>
+              <label for="setLength">Length</label>
+              <select id="setLength">
+                <option value="">not sure yet</option>
+                <option value="Short">Short</option>
+                <option value="Medium">Medium</option>
+                <option value="Long">Long</option>
+                <option value="XL">XL</option>
+              </select>
+            </div>
+            <div>
+              <label for="setShape">Shape</label>
+              <select id="setShape">
+                <option value="">not sure yet</option>
+                <option value="Square">Square</option>
+                <option value="Almond">Almond</option>
+                <option value="Coffin">Coffin</option>
+                <option value="Stiletto">Stiletto</option>
+                <option value="Oval">Oval</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-grid">
+            <div>
+              <label for="depositAmount">Deposit</label>
+              <input type="number" id="depositAmount" min="0" step="1" placeholder="0">
+            </div>
+            <div>
+              <label for="totalPrice">Total Price</label>
+              <input type="number" id="totalPrice" min="0" step="1" placeholder="0">
+            </div>
+          </div>
+
+          <label for="appointmentStatus">Status</label>
+          <select id="appointmentStatus">
+            <option value="Booked">Booked</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+            <option value="No Show">No Show</option>
+          </select>
+
+          <label for="appointmentNotes">Notes</label>
+          <textarea id="appointmentNotes" rows="5" placeholder="design inspo, allergies, retention notes, refill timing..."></textarea>
+
+          <div class="form-actions">
+            <button type="submit" id="saveAppointmentButton">Save Appointment</button>
+            <button type="button" id="cancelEditButton" class="secondary-button">Cancel Edit</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Appointment list -->
+      <section class="appointment-card">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">schedule</p>
+            <h2>Client Appointments</h2>
+          </div>
+        </div>
+
+        <div class="appointment-tools">
+          <input type="search" id="appointmentSearch" placeholder="search clients..." aria-label="Search appointments">
+          <select id="statusFilter" aria-label="Filter by status">
+            <option value="all">All statuses</option>
+            <option value="Booked">Booked</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+            <option value="No Show">No Show</option>
+          </select>
+          <select id="sortAppointments" aria-label="Sort appointments">
+            <option value="upcoming">Upcoming first</option>
+            <option value="newest">Newest added</option>
+            <option value="client">Client A-Z</option>
+          </select>
+        </div>
+
+        <div id="appointmentsList" class="appointments-list"></div>
+        <p id="emptyAppointments" class="appointment-empty">No appointments yet. Add your first client booking.</p>
+      </section>
+    </section>
+  </main>
+
+  <!-- Dark mode toggle that matches Talia Wiki -->
+  <button type="button" id="darkModeToggle" class="dark-mode-toggle" aria-label="Turn dark mode off">
+    <span class="toggle-text">Dark Mode</span>
+    <span class="toggle-switch">
+      <span class="toggle-dot"></span>
+    </span>
+  </button>
+
+  <script src="appointments.js"></script>
+</body>
+</html>
